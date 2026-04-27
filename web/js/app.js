@@ -1,8 +1,10 @@
-// Router + tasti globali (Esc, F, 1, 2)
+// Router minimale + tasti globali.
+// Schermate: "presentation" e "map". L'app parte sulle slide,
+// la mappa è la sezione finale, raggiunta dopo l'ultima slide.
 
 (() => {
-  const SCREENS = ["menu", "presentation", "map"];
-  let current = "menu";
+  const SCREENS = ["presentation", "map"];
+  let current = "presentation";
 
   function show(route) {
     if (!SCREENS.includes(route)) return;
@@ -12,12 +14,6 @@
       el.hidden = r !== route;
     });
     current = route;
-
-    if (route === "presentation") {
-      window.Slides && window.Slides.activate();
-    } else {
-      window.Slides && window.Slides.deactivate();
-    }
     if (route === "map") {
       window.Pins && window.Pins.ensure();
     }
@@ -31,17 +27,19 @@
     }
   }
 
-  // Bindings: tessere del menu + bottoni "Torna al menu"
+  // Bottoni con data-route="..."
   document.addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-route]");
-    if (btn) {
-      show(btn.dataset.route);
+    const route = e.target.closest("[data-route]");
+    if (route) show(route.dataset.route);
+    // bottone "Torna alle slide" sulla mappa
+    if (e.target.closest("[data-back-to-deck]")) {
+      window.Slides && window.Slides.backFromMap();
+      show("presentation");
     }
   });
 
-  // Tasti globali
+  // Tasti globali (F per fullscreen sempre, frecce gestite altrove)
   document.addEventListener("keydown", (e) => {
-    // Non rubare i tasti se l'utente sta scrivendo
     const tag = (e.target && e.target.tagName) || "";
     if (["INPUT", "TEXTAREA"].includes(tag)) return;
 
@@ -50,19 +48,19 @@
       e.preventDefault();
       return;
     }
-    if (current === "menu") {
-      if (e.key === "1") show("presentation");
-      if (e.key === "2") show("map");
-    }
-    if (e.key === "Escape") {
-      // dalle sezioni si torna al menu
-      if (current !== "menu") show("menu");
+    // Sulla mappa: frecce indietro tornano all'ultima slide
+    if (current === "map") {
+      const back = ["ArrowLeft", "ArrowUp", "PageUp", "Backspace", "Escape"];
+      if (back.includes(e.key)) {
+        e.preventDefault();
+        window.Slides && window.Slides.backFromMap();
+        show("presentation");
+      }
     }
   });
 
-  // Espone show() per debug
-  window.App = { show };
-
-  // Default: mostra menu
-  show("menu");
+  window.App = {
+    show,
+    current: () => current,
+  };
 })();

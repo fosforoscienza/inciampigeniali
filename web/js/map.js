@@ -1,17 +1,16 @@
-// Carica le scoperte, posiziona i pin sulla mappa, gestisce il modal.
-// Le coordinate dei pin sono espresse in % rispetto al contenitore della mappa
-// (xPct/yPct: 0 in alto-sinistra, 100 in basso-destra).
-// Conviene calibrarle a occhio una volta vista la PNG nel programma.
+// Carica le scoperte, posiziona i pin sulla mappa,
+// gestisce il modal che mostra solo il disegno.
 
 (() => {
   const DATA_URL = "data/discoveries.json";
+  const PLACEHOLDER = "assets/drawings/_placeholder.svg";
 
   let loaded = false;
   let discoveries = [];
 
-  const mapContainer = document.getElementById("map-container");
   const pinsLayer = document.getElementById("pins");
   const modal = document.getElementById("modal");
+  const drawingEl = document.getElementById("modal-drawing");
 
   async function loadData() {
     if (loaded) return;
@@ -44,26 +43,16 @@
   }
 
   function openModal(d) {
-    const photo = document.getElementById("modal-photo");
-    if (d.photo) {
-      photo.src = d.photo;
-      photo.alt = d.author || "";
-      photo.style.display = "";
-      photo.onerror = () => { photo.style.display = "none"; };
-    } else {
-      photo.removeAttribute("src");
-      photo.style.display = "none";
-    }
-    document.getElementById("modal-title").textContent = d.title || "";
-    document.getElementById("modal-meta").textContent = [d.author, d.year, d.location]
-      .filter(Boolean)
-      .join(" · ");
-    document.getElementById("modal-summary").textContent = d.summary || "";
+    const src = d.drawing || `assets/drawings/${d.id}.png`;
+    drawingEl.src = src;
+    drawingEl.alt = d.title || "";
+    drawingEl.onerror = () => { drawingEl.src = PLACEHOLDER; };
     modal.hidden = false;
   }
 
   function closeModal() {
     modal.hidden = true;
+    drawingEl.removeAttribute("src");
   }
 
   modal.querySelectorAll("[data-close-modal]").forEach((el) => {
@@ -72,15 +61,11 @@
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !modal.hidden) {
       closeModal();
-      e.stopPropagation(); // evita che ESC chiuda anche la sezione
+      e.stopPropagation();
     }
   });
 
   window.Pins = {
     ensure: loadData,
-    reload: () => {
-      loaded = false;
-      return loadData();
-    },
   };
 })();

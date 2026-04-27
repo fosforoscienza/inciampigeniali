@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <rect width="600" height="600" fill="#f4ecd6"/>
+  <g fill="none" stroke="#7d1d12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 200 220 Q 240 180, 300 200 T 400 240 Q 430 280, 410 340 T 360 420 Q 320 450, 270 430 T 200 380 Q 180 320, 200 220 Z"/>
+    <circle cx="270" cy="270" r="6" fill="#7d1d12"/>
+    <circle cx="340" cy="280" r="6" fill="#7d1d12"/>
+    <path d="M 260 340 Q 300 360, 340 340"/>
+  </g>
+  <text x="300" y="510" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="22" fill="#5b5247">Disegno in arrivo</text>
+</svg>

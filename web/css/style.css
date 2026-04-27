@@ -1,6 +1,5 @@
 /* ============================================================
-   Inciampi Geniali — design system
-   Palette + texture coerenti con i template Canva.
+   Inciampi Geniali — design system (versione PNG-per-slide)
    ============================================================ */
 
 *,
@@ -8,13 +7,11 @@
 *::after { box-sizing: border-box; }
 
 :root {
-  --paper: #f4ecd6;            /* sfumatura crema */
-  --paper-dark: #e9dfc4;
-  --grey-bg: #c9c8c2;          /* fondino grigio-azzurro */
+  --paper: #f4ecd6;
+  --grey-bg: #c9c8c2;
   --ink: #2b2622;
   --ink-soft: #5b5247;
-  --accent: #7d1d12;           /* bordeaux dei titoli */
-  --accent-pink: #b3514a;      /* sottotitoli */
+  --accent: #7d1d12;
   --paper-shadow: 0 6px 28px rgba(60, 40, 20, 0.18);
   --font-display: "Bebas Neue", "Anton", "Oswald", "Impact", sans-serif;
   --font-serif: "Lora", Georgia, "Times New Roman", serif;
@@ -43,7 +40,7 @@ kbd {
 }
 
 /* ============================================================
-   Schermate (un solo screen visibile alla volta)
+   Schermate
    ============================================================ */
 .screen {
   position: fixed;
@@ -54,107 +51,26 @@ kbd {
 .screen[hidden] { display: none; }
 
 /* ============================================================
-   MENU iniziale
+   PRESENTAZIONE — slide come PNG a tutta pagina (16:9)
    ============================================================ */
-.screen--menu { background: transparent; }
-.menu__inner {
-  margin: auto;
-  padding: 2rem;
-  text-align: center;
-  max-width: 1100px;
-  width: 100%;
-  background: var(--paper) url("../assets/decor/texture-carta.png") center/cover;
-  border-radius: 12px;
-  box-shadow: var(--paper-shadow);
-  padding: 3rem 4rem;
-}
-.menu__title {
-  font-family: var(--font-display);
-  font-size: clamp(3.5rem, 9vw, 7rem);
-  margin: 0 0 0.5rem;
-  color: var(--accent);
-  letter-spacing: 0.02em;
-  font-weight: 900;
-}
-.menu__tagline {
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  font-style: italic;
-  color: var(--ink-soft);
-  margin: 0 0 2.5rem;
-}
-.menu__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-.tile {
-  background: rgba(255, 250, 240, 0.7);
-  border: 2px solid var(--ink);
-  border-radius: 8px;
-  padding: 2.2rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-}
-.tile:hover, .tile:focus-visible {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(60,40,20,0.18);
-  background: #fffaf0;
-  outline: none;
-}
-.tile__num {
-  font-family: var(--font-display);
-  font-size: 3rem;
-  color: var(--accent);
-  line-height: 1;
-}
-.tile__label {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  letter-spacing: 0.02em;
-}
-.tile__hint {
-  font-family: var(--font-serif);
-  font-size: 0.95rem;
-  font-style: italic;
-  color: var(--ink-soft);
-}
-.menu__hint {
-  font-size: 0.9rem;
-  color: var(--ink-soft);
-  margin: 1rem 0 0;
-}
-
-/* ============================================================
-   PRESENTAZIONE — deck e cornice
-   ============================================================ */
-.screen--presentation { background: transparent; }
-
 .deck {
   flex: 1;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem 3rem;
+  padding: 1.5rem 2rem;
   overflow: hidden;
 }
 
-/* La "carta" che fa da cornice della slide.
-   Aspect ratio 16:9 mantenuta, dimensione massima ragionevole. */
 .slide {
   position: absolute;
-  width: min(92vw, calc((100vh - 8rem) * 16 / 9));
+  width: min(96vw, calc((100vh - 6rem) * 16 / 9));
   aspect-ratio: 16 / 9;
-  background: var(--paper) url("../assets/decor/texture-carta.png") center/cover;
   border-radius: 8px;
   box-shadow: var(--paper-shadow);
-  padding: 0;
   overflow: hidden;
+  background: var(--paper);
   opacity: 0;
   transform: translateX(20px);
   transition: opacity 0.35s ease, transform 0.35s ease;
@@ -165,290 +81,70 @@ kbd {
   transform: translateX(0);
   pointer-events: auto;
 }
-
-/* Decori a stelle/scarabocchi sovrapposti (PNG con sfondo trasparente) */
-.slide::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("../assets/decor/stelle.png") center/cover no-repeat;
-  opacity: 0.65;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Tutto il contenuto delle slide è dentro questo wrapper */
-.slide-content {
-  position: relative;
-  z-index: 2;
-  height: 100%;
+.slide__img {
   width: 100%;
-  display: flex;
-  padding: 6% 8%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-/* ---------- Variante: TITOLO ---------- */
-.slide[data-variant="titolo"] .slide-content {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-.slide[data-variant="titolo"] .slide-title {
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 8vw, 6rem);
-  color: var(--accent);
-  margin: 0;
-  letter-spacing: 0.03em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-.slide[data-variant="titolo"] .slide-subtitle {
-  font-family: var(--font-serif);
-  font-size: clamp(1.2rem, 2.4vw, 1.8rem);
-  color: var(--ink);
-  margin: 1.2rem 0 0;
-  font-weight: 600;
-}
-/* Pergamena in alto a sx, globo in basso a dx, logo in basso al centro */
-.slide[data-variant="titolo"]::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    url("../assets/decor/pergamena.png"),
-    url("../assets/decor/globo.png"),
-    url("../assets/decor/logo-fosforo.png");
-  background-position:
-    4% 8%,
-    96% 92%,
-    50% 95%;
-  background-size:
-    14% auto,
-    14% auto,
-    12% auto;
-  background-repeat: no-repeat, no-repeat, no-repeat;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* ---------- Variante: IMMAGINE + TESTO ---------- */
-.slide[data-variant="immagine-testo"] .slide-content {
-  flex-direction: row;
-  gap: 4%;
-  align-items: center;
-}
-.slide[data-variant="immagine-testo"] .slide-img {
-  flex: 0 0 38%;
-  height: 75%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.slide[data-variant="immagine-testo"] .slide-img img,
-.slide[data-variant="immagine-testo"] .slide-img-placeholder {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-.slide[data-variant="immagine-testo"] .slide-img-placeholder {
-  width: 90%;
-  aspect-ratio: 1;
-  border: 2px dashed rgba(43,38,34,0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-style: italic;
-  color: rgba(43,38,34,0.45);
-  font-size: 0.95rem;
-  text-align: center;
-  padding: 1rem;
-}
-.slide[data-variant="immagine-testo"] .slide-text {
-  flex: 1;
+/* Placeholder mostrato quando il PNG della slide non è ancora caricato */
+.slide__placeholder {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   gap: 0.8rem;
-}
-.slide[data-variant="immagine-testo"] .slide-eyebrow {
-  font-family: var(--font-serif);
-  font-style: italic;
-  color: var(--accent-pink);
-  font-size: clamp(1rem, 1.6vw, 1.3rem);
-  margin: 0;
-}
-.slide[data-variant="immagine-testo"] .slide-title {
-  font-family: var(--font-display);
-  font-size: clamp(2.4rem, 5vw, 4rem);
-  color: var(--accent);
-  margin: 0;
-  letter-spacing: 0.02em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-.slide[data-variant="immagine-testo"] .slide-body {
-  font-family: var(--font-serif);
-  font-size: clamp(1rem, 1.6vw, 1.35rem);
-  color: var(--ink);
-  margin: 0.5rem 0 0;
-}
-.slide[data-variant="immagine-testo"] .slide-body strong {
-  color: var(--accent);
-}
-
-/* ---------- Variante: IMMAGINE + CITAZIONE ---------- */
-.slide[data-variant="immagine-citazione"] .slide-content {
-  flex-direction: row;
-  align-items: center;
-  gap: 4%;
-}
-.slide[data-variant="immagine-citazione"] .quote-img {
-  flex: 0 0 32%;
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.slide[data-variant="immagine-citazione"] .quote-img img,
-.slide[data-variant="immagine-citazione"] .quote-img-placeholder {
-  max-width: 100%;
-  max-height: 75%;
-  object-fit: contain;
-}
-.slide[data-variant="immagine-citazione"] .quote-img-placeholder {
-  width: 80%;
-  aspect-ratio: 1;
-  border: 2px dashed rgba(43,38,34,0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-style: italic;
-  color: rgba(43,38,34,0.45);
-  font-size: 0.9rem;
-  text-align: center;
-  padding: 1rem;
-}
-.slide[data-variant="immagine-citazione"] .quote-author {
-  margin-top: 0.8rem;
-  text-align: center;
-}
-.slide[data-variant="immagine-citazione"] .quote-author-name {
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3vw, 2.3rem);
-  color: var(--accent);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  display: block;
-  line-height: 1;
-}
-.slide[data-variant="immagine-citazione"] .quote-author-meta {
-  font-family: var(--font-serif);
-  font-style: italic;
-  color: var(--ink-soft);
-  font-size: 0.95rem;
-  margin-top: 0.2rem;
-}
-.slide[data-variant="immagine-citazione"] .quote-card {
-  flex: 1;
-  background: #fffaf0;
-  padding: 4% 5%;
-  position: relative;
-  box-shadow: 0 4px 18px rgba(60,40,20,0.18);
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.slide[data-variant="immagine-citazione"] .quote-mark {
-  font-family: var(--font-serif);
-  font-size: 5rem;
-  line-height: 0.6;
-  color: var(--accent-pink);
-  margin: 0 0 0.6rem;
-}
-.slide[data-variant="immagine-citazione"] .quote-text {
-  font-family: var(--font-serif);
-  font-size: clamp(1.6rem, 3.2vw, 2.4rem);
-  font-weight: 700;
-  color: var(--ink);
-  margin: 0;
-  line-height: 1.15;
-}
-.slide[data-variant="immagine-citazione"] .quote-trans {
-  font-family: var(--font-body);
-  font-weight: 700;
-  color: var(--accent);
-  font-size: clamp(1rem, 1.6vw, 1.25rem);
-  margin: 0.6rem 0 0;
-}
-
-/* ---------- Variante: SOLO IMMAGINE ---------- */
-.slide[data-variant="solo-immagine"] .slide-content {
-  align-items: center;
-  justify-content: center;
-}
-.slide[data-variant="solo-immagine"] .full-img,
-.slide[data-variant="solo-immagine"] .full-img-placeholder {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-.slide[data-variant="solo-immagine"] .full-img-placeholder {
-  width: 80%;
-  height: 80%;
-  border: 2px dashed rgba(43,38,34,0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-style: italic;
-  color: rgba(43,38,34,0.45);
-  font-size: 1.1rem;
-  text-align: center;
   padding: 2rem;
-}
-.slide[data-variant="solo-immagine"] .full-img-caption {
-  position: absolute;
-  bottom: 6%;
-  left: 0;
-  right: 0;
+  background: var(--paper) url("../assets/decor/texture-carta.png") center/cover;
   text-align: center;
+}
+.slide__placeholder-id {
   font-family: var(--font-display);
-  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+  font-size: clamp(2rem, 5vw, 4rem);
   color: var(--accent);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  z-index: 3;
+  letter-spacing: 0.05em;
+}
+.slide__placeholder-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 2.4vw, 1.8rem);
+  font-style: italic;
+  color: var(--ink);
+}
+.slide__placeholder-hint {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-top: 1rem;
+}
+.slide__placeholder-hint code {
+  background: rgba(43,38,34,0.08);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
 }
 
-/* ============================================================
-   Chrome inferiore della presentazione (menu + progress)
-   ============================================================ */
+/* Chrome inferiore della presentazione */
 .deck__chrome {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
   padding: 0.7rem 1.5rem;
-  background: rgba(255,250,240,0.85);
-  backdrop-filter: blur(6px);
-  border-top: 1px solid rgba(43,38,34,0.15);
+  background: rgba(255, 250, 240, 0.65);
+  backdrop-filter: blur(4px);
+  border-top: 1px dashed rgba(43,38,34,0.18);
 }
-.chrome-btn {
-  background: transparent;
-  border: 1px solid rgba(43,38,34,0.3);
-  border-radius: 4px;
-  padding: 0.4rem 0.9rem;
-  font-size: 0.95rem;
-  color: var(--ink);
-  font-family: var(--font-body);
-}
-.chrome-btn:hover { background: rgba(43,38,34,0.05); }
 .deck__progress {
   font-family: var(--font-display);
   font-size: 1.4rem;
   color: var(--ink-soft);
   letter-spacing: 0.05em;
+}
+.deck__hint {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  font-style: italic;
 }
 
 .black-overlay {
@@ -466,16 +162,26 @@ kbd {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 0.8rem 1.5rem;
-  background: rgba(255,250,240,0.85);
-  border-bottom: 1px solid rgba(43,38,34,0.15);
+  padding: 0.7rem 1.5rem;
+  background: rgba(255, 250, 240, 0.65);
+  backdrop-filter: blur(4px);
+  border-bottom: 1px dashed rgba(43,38,34,0.18);
 }
+.chrome-btn {
+  background: transparent;
+  border: 1.5px solid var(--ink);
+  border-radius: 4px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.95rem;
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+.chrome-btn:hover { background: rgba(43,38,34,0.08); }
 .map__hint {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.1rem;
   color: var(--accent);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
 .map-container {
   flex: 1;
@@ -484,10 +190,7 @@ kbd {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: var(--paper) url("../assets/decor/texture-carta.png") center/cover;
-  margin: 1.5rem;
-  border-radius: 8px;
-  box-shadow: var(--paper-shadow);
+  padding: 1rem;
 }
 .map-image {
   max-width: 100%;
@@ -502,10 +205,11 @@ kbd {
   pointer-events: none;
 }
 
+/* Pin animato */
 .pin {
   position: absolute;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   transform: translate(-50%, -100%);
   background: none;
   border: 0;
@@ -536,15 +240,19 @@ kbd {
   filter: blur(1px);
 }
 .pin:hover::before { background: #4d0d05; }
-.pin:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 50%; }
+.pin:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+  border-radius: 50%;
+}
 
 @keyframes pin-pulse {
   0%, 100% { transform: rotate(-45deg) scale(1); }
-  50%      { transform: rotate(-45deg) scale(1.2); }
+  50%      { transform: rotate(-45deg) scale(1.15); }
 }
 
 /* ============================================================
-   MODAL scoperta
+   MODAL — solo disegno
    ============================================================ */
 .modal[hidden] { display: none; }
 .modal {
@@ -558,53 +266,34 @@ kbd {
 .modal__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(20,14,8,0.6);
+  background: rgba(20,14,8,0.7);
 }
 .modal__panel {
   position: relative;
-  background: var(--paper) url("../assets/decor/texture-carta.png") center/cover;
-  max-width: 560px;
-  width: calc(100% - 2rem);
-  padding: 2rem 1.8rem 1.6rem;
-  border-radius: 8px;
-  box-shadow: 0 16px 50px rgba(0,0,0,0.4);
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .modal__close {
   position: absolute;
-  top: 0.4rem;
-  right: 0.7rem;
+  top: -3rem;
+  right: 0;
   background: transparent;
   border: 0;
-  font-size: 2rem;
+  font-size: 2.5rem;
   line-height: 1;
-  color: var(--ink);
+  color: #fff;
+  cursor: pointer;
 }
-.modal__photo {
-  width: 100%;
-  max-height: 300px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 1rem;
-  background: #fffaf0;
-}
-.modal__photo[src=""], .modal__photo:not([src]) { display: none; }
-.modal__title {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
-  margin: 0 0 0.2rem;
-  color: var(--accent);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-.modal__meta {
-  font-family: var(--font-serif);
-  font-style: italic;
-  color: var(--ink-soft);
-  margin: 0 0 1rem;
-}
-.modal__summary {
-  font-family: var(--font-serif);
-  margin: 0;
-  font-size: 1.05rem;
-  line-height: 1.5;
+.modal__drawing {
+  max-width: 90vw;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background: var(--paper);
+  border-radius: 8px;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.4);
 }
