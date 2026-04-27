@@ -49,6 +49,7 @@
       photo.src = d.photo;
       photo.alt = d.author || "";
       photo.style.display = "";
+      photo.onerror = () => { photo.style.display = "none"; };
     } else {
       photo.removeAttribute("src");
       photo.style.display = "none";

@@ -1,122 +1,62 @@
 [
   {
     "id": "colombo-america",
-    "title": "America",
     "author": "Cristoforo Colombo",
-    "year": 1492,
-    "location": "Bahamas",
-    "lat": 24.05,
-    "lng": -74.5,
     "wikimedia_image": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Cristoforo_Colombo.jpg"
   },
   {
     "id": "fleming-penicillina",
-    "title": "Penicillina",
     "author": "Alexander Fleming",
-    "year": 1928,
-    "location": "Londra, Regno Unito",
-    "lat": 51.52,
-    "lng": -0.17,
-    "wikimedia_image": "https://upload.wikimedia.org/wikipedia/commons/b/be/Synthetic_Production_of_Penicillin_TR_1468.jpg"
+    "wikimedia_image": "https://upload.wikimedia.org/wikipedia/commons/9/96/Synthetic_Production_of_Penicillin_TR_1468.jpg"
   },
   {
     "id": "de-mestral-velcro",
-    "title": "Velcro",
     "author": "George de Mestral",
-    "year": 1941,
-    "location": "Commugny, Svizzera",
-    "lat": 46.32,
-    "lng": 6.20,
     "wikimedia_image": ""
   },
   {
     "id": "goodyear-gomma",
-    "title": "Gomma vulcanizzata",
     "author": "Charles Goodyear",
-    "year": 1839,
-    "location": "Woburn, Massachusetts",
-    "lat": 42.48,
-    "lng": -71.15,
     "wikimedia_image": "https://upload.wikimedia.org/wikipedia/commons/8/89/Charles_Goodyear_2.jpg"
   },
   {
     "id": "fielding-pluriball",
-    "title": "Pluriball",
-    "author": "Alfred Fielding e Marc Chavannes",
-    "year": 1957,
-    "location": "Hawthorne, New Jersey",
-    "lat": 40.96,
-    "lng": -74.15,
+    "author": "Alfred Fielding",
     "wikimedia_image": ""
   },
   {
     "id": "benedictus-vetro",
-    "title": "Vetro infrangibile",
-    "author": "Édouard Bénédictus",
-    "year": 1903,
-    "location": "Parigi, Francia",
-    "lat": 48.85,
-    "lng": 2.35,
+    "author": "Edouard Benedictus",
     "wikimedia_image": "https://upload.wikimedia.org/wikipedia/commons/0/06/%C3%89douard_B%C3%A9n%C3%A9dictus.jpg"
   },
   {
     "id": "wells-gas-esilarante",
-    "title": "Gas esilarante (anestesia)",
     "author": "Horace Wells",
-    "year": 1844,
-    "location": "Hartford, Connecticut",
-    "lat": 41.76,
-    "lng": -72.67,
     "wikimedia_image": "https://upload.wikimedia.org/wikipedia/commons/9/96/Horace_Wells.jpg"
   },
   {
     "id": "hofmann-lsd",
-    "title": "LSD",
     "author": "Albert Hofmann",
-    "year": 1943,
-    "location": "Basilea, Svizzera",
-    "lat": 47.56,
-    "lng": 7.59,
     "wikimedia_image": "https://upload.wikimedia.org/wikipedia/commons/8/85/Albert_Hofmann_Oct_1993.jpg"
   },
   {
     "id": "gin-tonic",
-    "title": "Gin Tonic",
-    "author": "Ufficiali britannici in India",
-    "year": 1850,
-    "location": "Calcutta, India",
-    "lat": 22.57,
-    "lng": 88.36,
-    "wikimedia_image": ""
+    "author": "Winston Churchill",
+    "wikimedia_image": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Sir_Winston_Churchill_-_19086236948.jpg"
   },
   {
     "id": "pfizer-viagra",
-    "title": "Viagra",
-    "author": "Team Pfizer (David Brown)",
-    "year": 1989,
-    "location": "Sandwich, Regno Unito",
-    "lat": 51.27,
-    "lng": 1.34,
+    "author": "Pfizer Sandwich",
     "wikimedia_image": ""
   },
   {
     "id": "alexander-chemio",
-    "title": "Chemioterapia",
-    "author": "Stewart F. Alexander, Goodman, Gilman",
-    "year": 1943,
-    "location": "Bari, Italia",
-    "lat": 41.12,
-    "lng": 16.87,
+    "author": "Stewart Francis Alexander",
     "wikimedia_image": ""
   },
   {
     "id": "fahlberg-saccarina",
-    "title": "Saccarina",
     "author": "Constantin Fahlberg",
-    "year": 1878,
-    "location": "Baltimora, USA",
-    "lat": 39.30,
-    "lng": -76.62,
     "wikimedia_image": "https://upload.wikimedia.org/wikipedia/commons/c/c9/Constantin_Fahlberg.png"
   }
 ]
