@@ -157,15 +157,8 @@ kbd {
 /* ============================================================
    PLANISFERO
    ============================================================ */
-.screen--map { background: transparent; }
-.map__chrome {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.7rem 1.5rem;
-  background: rgba(255, 250, 240, 0.65);
-  backdrop-filter: blur(4px);
-  border-bottom: 1px dashed rgba(43,38,34,0.18);
+.screen--map {
+  background: var(--paper) url("../assets/decor/texture-carta.png") center/cover;
 }
 .chrome-btn {
   background: transparent;
@@ -177,12 +170,6 @@ kbd {
   font-family: var(--font-body);
 }
 .chrome-btn:hover { background: rgba(43,38,34,0.08); }
-.map__hint {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 1.1rem;
-  color: var(--accent);
-}
 .map-container {
   flex: 1;
   position: relative;
@@ -190,7 +177,7 @@ kbd {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 .map-image {
   max-width: 100%;
@@ -297,3 +284,69 @@ kbd {
   border-radius: 8px;
   box-shadow: 0 12px 48px rgba(0,0,0,0.4);
 }
+
+/* ============================================================
+   MODALITÀ CALIBRAZIONE PIN
+   Si attiva con il tasto C sulla mappa: i pin diventano trascinabili,
+   mostrano il titolo + le coordinate aggiornate, e un pannello in basso
+   permette di copiare il JSON.
+   ============================================================ */
+.coord-readout {
+  position: absolute;
+  pointer-events: none;
+  background: var(--ink);
+  color: #fff;
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.85rem;
+  z-index: 30;
+  transform: translate(12px, 12px);
+}
+
+.calibrate-panel {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 1.5rem;
+  background: rgba(125, 29, 18, 0.92);
+  color: #fff;
+  border-top: 2px solid var(--ink);
+}
+.calibrate-panel__label {
+  flex: 1;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+}
+.calibrate-panel .chrome-btn {
+  border-color: #fff;
+  color: #fff;
+}
+.calibrate-panel .chrome-btn:hover { background: rgba(255,255,255,0.15); }
+
+/* In modalità calibrazione: cursore di mira sulla mappa, pin più visibili */
+body.calibrating .map-container { cursor: crosshair; }
+body.calibrating .pin {
+  cursor: grab;
+}
+body.calibrating .pin:active { cursor: grabbing; }
+body.calibrating .pin::before { animation: none; }
+
+/* Etichetta del pin con titolo + coordinate (visibile solo in calibrazione) */
+.pin__label {
+  position: absolute;
+  left: 50%;
+  top: -0.4rem;
+  transform: translate(-50%, -100%);
+  background: var(--ink);
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  display: none;
+  pointer-events: none;
+}
+body.calibrating .pin__label { display: block; }

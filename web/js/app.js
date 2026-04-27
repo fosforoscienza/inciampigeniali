@@ -31,11 +31,6 @@
   document.addEventListener("click", (e) => {
     const route = e.target.closest("[data-route]");
     if (route) show(route.dataset.route);
-    // bottone "Torna alle slide" sulla mappa
-    if (e.target.closest("[data-back-to-deck]")) {
-      window.Slides && window.Slides.backFromMap();
-      show("presentation");
-    }
   });
 
   // Tasti globali (F per fullscreen sempre, frecce gestite altrove)
@@ -48,7 +43,9 @@
       e.preventDefault();
       return;
     }
-    // Sulla mappa: frecce indietro tornano all'ultima slide
+    // Sulla mappa: frecce indietro tornano all'ultima slide.
+    // (Il modal e la modalità calibrazione gestiscono Esc per conto loro
+    //  con stopImmediatePropagation, quindi non tornano alle slide.)
     if (current === "map") {
       const back = ["ArrowLeft", "ArrowUp", "PageUp", "Backspace", "Escape"];
       if (back.includes(e.key)) {

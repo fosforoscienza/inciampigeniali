@@ -27,13 +27,15 @@
   <!-- PLANISFERO                                                    -->
   <!-- ============================================================ -->
   <section id="screen-map" class="screen screen--map" data-screen="map" hidden>
-    <div class="map__chrome">
-      <button class="chrome-btn" type="button" data-back-to-deck aria-label="Torna alle slide">&larr; Slide</button>
-      <span class="map__hint">Clicca un pin per vedere la scoperta</span>
-    </div>
     <div id="map-container" class="map-container">
       <img id="map-image" class="map-image" src="assets/map/planisfero.png" alt="Planisfero disegnato a mano" />
       <div id="pins" class="pins"></div>
+      <div id="coord-readout" class="coord-readout" hidden>0.0%, 0.0%</div>
+    </div>
+    <div id="calibrate-panel" class="calibrate-panel" hidden>
+      <span class="calibrate-panel__label">Modalità calibrazione attiva &middot; trascina i pin, poi:</span>
+      <button id="copy-coords" class="chrome-btn" type="button">Copia coordinate</button>
+      <button id="exit-calibrate" class="chrome-btn" type="button">Esci (C)</button>
     </div>
   </section>
 
