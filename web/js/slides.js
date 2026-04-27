@@ -8,50 +8,14 @@
 //   Home/End: prima / ultima slide
 
 (() => {
-  // Naming sequenziale: 01.png … 26.png in web/assets/slides/.
-  // Per cambiare ordine, riordinare le righe; il file 01.png è sempre
-  // la prima slide, 02.png la seconda, ecc.
-  const SLIDES = [
-    // ---------- INTRODUZIONE ----------
-    { num: 1,  title: "Inciampi Geniali" },
-    { num: 2,  title: "Cos'è un errore?" },
-    { num: 3,  title: "Le conseguenze" },
-    { num: 4,  title: "Lo sbaglio è il protagonista" },
-    { num: 5,  title: "Scoperte serendipiche" },
-    { num: 6,  title: "La scienza delle persone" },
-    { num: 7,  title: "Prima, la serendipità" },
-
-    // ---------- DOVE TUTTO NASCE ----------
-    { num: 8,  title: "1300 d.C., Persia" },
-    { num: 9,  title: "I tre principi di Serendippo" },
-    { num: 10, title: "L'esilio" },
-    { num: 11, title: "Il cammelliere" },
-    { num: 12, title: "Sei dettagli del cammello" },
-    { num: 13, title: "Pura deduzione" },
-    { num: 14, title: "Da prigionieri a consiglieri" },
-
-    // ---------- NASCITA DEL NOME ----------
-    { num: 15, title: "Venezia, 1557" },
-    { num: 16, title: "Horace Walpole, 1754" },
-    { num: 17, title: "Coniato in una lettera" },
-    { num: 18, title: "Anche il nome nasce da uno sbaglio" },
-
-    // ---------- DEFINIZIONE ----------
-    { num: 19, title: "Cos'è la serendipità" },
-    { num: 20, title: "Non basta il caso" },
-    { num: 21, title: "Pasteur" },
-    { num: 22, title: "Quanti nel cestino?" },
-
-    // ---------- TIPI DI SERENDIPITÀ ----------
-    { num: 23, title: "Tre tipi" },
-    { num: 24, title: "Debole" },
-    { num: 25, title: "Forte" },
-    { num: 26, title: "Precoce" },
-  ].map((s) => ({
-    ...s,
-    id: String(s.num).padStart(2, "0"),
-    img: `assets/slides/${String(s.num).padStart(2, "0")}.png`,
-  }));
+  // 26 slide caricate da web/assets/slides/01.png … 26.png.
+  // L'ordine è quello dei file: 01 = prima slide, 26 = ultima.
+  const SLIDE_COUNT = 26;
+  const SLIDES = Array.from({ length: SLIDE_COUNT }, (_, i) => {
+    const n = i + 1;
+    const id = String(n).padStart(2, "0");
+    return { num: n, id, title: `Slide ${n}`, img: `assets/slides/${id}.png` };
+  });
 
   let currentIndex = 0;
   let loaded = false;
