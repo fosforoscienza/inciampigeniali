@@ -1,0 +1,15 @@
+[
+  {
+    "id": "esempio",
+    "title": "Esempio scoperta",
+    "author": "Nome Cognome",
+    "year": 1928,
+    "location": "Città, Paese",
+    "photo": "assets/photos/esempio.png",
+    "summary": "Riassunto di massimo 500 caratteri.",
+    "lat": 0,
+    "lng": 0,
+    "xPct": 50,
+    "yPct": 50
+  }
+]

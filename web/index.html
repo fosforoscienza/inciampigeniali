@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inciampi Geniali</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ============================================================ -->
+  <!-- MENU iniziale                                                 -->
+  <!-- ============================================================ -->
+  <section id="screen-menu" class="screen screen--menu" data-screen="menu">
+    <div class="menu__inner">
+      <h1 class="menu__title">Inciampi Geniali</h1>
+      <p class="menu__tagline">Storie di errori e imprevisti memorabili</p>
+      <nav class="menu__grid">
+        <button class="tile" data-route="presentation" type="button">
+          <span class="tile__num">1</span>
+          <span class="tile__label">Presentazione</span>
+          <span class="tile__hint">Slide navigabili con le frecce o un presenter Bluetooth</span>
+        </button>
+        <button class="tile" data-route="map" type="button">
+          <span class="tile__num">2</span>
+          <span class="tile__label">Planisfero</span>
+          <span class="tile__hint">Le scoperte serendipiche sulla mappa del mondo</span>
+        </button>
+      </nav>
+      <p class="menu__hint">Premi <kbd>1</kbd> o <kbd>2</kbd> per entrare, <kbd>F</kbd> per fullscreen</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- PRESENTAZIONE                                                 -->
+  <!-- ============================================================ -->
+  <section id="screen-presentation" class="screen screen--presentation" data-screen="presentation" hidden>
+    <div id="deck" class="deck" aria-live="polite"></div>
+    <div class="deck__chrome">
+      <button class="chrome-btn" type="button" data-route="menu" aria-label="Torna al menu">&larr; Menu</button>
+      <span class="deck__progress"><span id="slide-current">1</span>&thinsp;/&thinsp;<span id="slide-total">5</span></span>
+    </div>
+    <div id="black-overlay" class="black-overlay" hidden></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- PLANISFERO                                                    -->
+  <!-- ============================================================ -->
+  <section id="screen-map" class="screen screen--map" data-screen="map" hidden>
+    <div class="map__chrome">
+      <button class="chrome-btn" type="button" data-route="menu" aria-label="Torna al menu">&larr; Menu</button>
+      <span class="map__hint">Clicca un pin per scoprire la storia</span>
+    </div>
+    <div id="map-container" class="map-container">
+      <img id="map-image" class="map-image" src="assets/map/planisfero.png" alt="Planisfero disegnato a mano" />
+      <div id="pins" class="pins"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- MODAL scoperta                                                -->
+  <!-- ============================================================ -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__panel" role="document">
+      <button class="modal__close" type="button" aria-label="Chiudi" data-close-modal>&times;</button>
+      <img id="modal-photo" class="modal__photo" alt="" />
+      <h3 id="modal-title" class="modal__title"></h3>
+      <p id="modal-meta" class="modal__meta"></p>
+      <p id="modal-summary" class="modal__summary"></p>
+    </div>
+  </div>
+
+  <script src="js/slides.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
