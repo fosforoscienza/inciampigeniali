@@ -8,43 +8,50 @@
 //   Home/End: prima / ultima slide
 
 (() => {
+  // Naming sequenziale: 01.png … 26.png in web/assets/slides/.
+  // Per cambiare ordine, riordinare le righe; il file 01.png è sempre
+  // la prima slide, 02.png la seconda, ecc.
   const SLIDES = [
     // ---------- INTRODUZIONE ----------
-    { id: "01-01", img: "assets/slides/01-01.png", title: "Inciampi Geniali" },
-    { id: "01-02", img: "assets/slides/01-02.png", title: "Cos'è un errore?" },
-    { id: "01-03", img: "assets/slides/01-03.png", title: "Le conseguenze" },
-    { id: "01-04", img: "assets/slides/01-04.png", title: "Lo sbaglio è il protagonista" },
-    { id: "01-05", img: "assets/slides/01-05.png", title: "Scoperte serendipiche" },
-    { id: "01-06", img: "assets/slides/01-06.png", title: "La scienza delle persone" },
-    { id: "01-07", img: "assets/slides/01-07.png", title: "Prima, la serendipità" },
+    { num: 1,  title: "Inciampi Geniali" },
+    { num: 2,  title: "Cos'è un errore?" },
+    { num: 3,  title: "Le conseguenze" },
+    { num: 4,  title: "Lo sbaglio è il protagonista" },
+    { num: 5,  title: "Scoperte serendipiche" },
+    { num: 6,  title: "La scienza delle persone" },
+    { num: 7,  title: "Prima, la serendipità" },
 
     // ---------- DOVE TUTTO NASCE ----------
-    { id: "02-01", img: "assets/slides/02-01.png", title: "1300 d.C., Persia" },
-    { id: "02-02", img: "assets/slides/02-02.png", title: "I tre principi di Serendippo" },
-    { id: "02-03", img: "assets/slides/02-03.png", title: "L'esilio" },
-    { id: "02-04", img: "assets/slides/02-04.png", title: "Il cammelliere" },
-    { id: "02-05", img: "assets/slides/02-05.png", title: "Sei dettagli del cammello" },
-    { id: "02-06", img: "assets/slides/02-06.png", title: "Pura deduzione" },
-    { id: "02-07", img: "assets/slides/02-07.png", title: "Da prigionieri a consiglieri" },
+    { num: 8,  title: "1300 d.C., Persia" },
+    { num: 9,  title: "I tre principi di Serendippo" },
+    { num: 10, title: "L'esilio" },
+    { num: 11, title: "Il cammelliere" },
+    { num: 12, title: "Sei dettagli del cammello" },
+    { num: 13, title: "Pura deduzione" },
+    { num: 14, title: "Da prigionieri a consiglieri" },
 
     // ---------- NASCITA DEL NOME ----------
-    { id: "03-01", img: "assets/slides/03-01.png", title: "Venezia, 1557" },
-    { id: "03-02", img: "assets/slides/03-02.png", title: "Horace Walpole, 1754" },
-    { id: "03-03", img: "assets/slides/03-03.png", title: "Coniato in una lettera" },
-    { id: "03-04", img: "assets/slides/03-04.png", title: "Anche il nome nasce da uno sbaglio" },
+    { num: 15, title: "Venezia, 1557" },
+    { num: 16, title: "Horace Walpole, 1754" },
+    { num: 17, title: "Coniato in una lettera" },
+    { num: 18, title: "Anche il nome nasce da uno sbaglio" },
 
     // ---------- DEFINIZIONE ----------
-    { id: "04-01", img: "assets/slides/04-01.png", title: "Cos'è la serendipità" },
-    { id: "04-02", img: "assets/slides/04-02.png", title: "Non basta il caso" },
-    { id: "04-03", img: "assets/slides/04-03.png", title: "Pasteur" },
-    { id: "04-04", img: "assets/slides/04-04.png", title: "Quanti nel cestino?" },
+    { num: 19, title: "Cos'è la serendipità" },
+    { num: 20, title: "Non basta il caso" },
+    { num: 21, title: "Pasteur" },
+    { num: 22, title: "Quanti nel cestino?" },
 
     // ---------- TIPI DI SERENDIPITÀ ----------
-    { id: "05-01", img: "assets/slides/05-01.png", title: "Tre tipi" },
-    { id: "05-02", img: "assets/slides/05-02.png", title: "Debole" },
-    { id: "05-03", img: "assets/slides/05-03.png", title: "Forte" },
-    { id: "05-04", img: "assets/slides/05-04.png", title: "Precoce" },
-  ];
+    { num: 23, title: "Tre tipi" },
+    { num: 24, title: "Debole" },
+    { num: 25, title: "Forte" },
+    { num: 26, title: "Precoce" },
+  ].map((s) => ({
+    ...s,
+    id: String(s.num).padStart(2, "0"),
+    img: `assets/slides/${String(s.num).padStart(2, "0")}.png`,
+  }));
 
   let currentIndex = 0;
   let loaded = false;
