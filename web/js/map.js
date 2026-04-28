@@ -15,6 +15,9 @@
   const drawingEl = document.getElementById("modal-drawing");
   const titleEl = document.getElementById("modal-title");
   const subtitleEl = document.getElementById("modal-subtitle");
+  const summaryEl = document.getElementById("modal-summary");
+  const storyDiv = document.getElementById("modal-story");
+  const storyBtn = document.getElementById("modal-story-btn");
   const readout = document.getElementById("coord-readout");
   const calibratePanel = document.getElementById("calibrate-panel");
 
@@ -170,7 +173,7 @@
     setTimeout(() => { el.textContent = old; }, 2200);
   }
 
-  // ----- Modal scoperta (titolo + sottotitolo + disegno) -----
+  // ----- Modal scoperta (titolo + sottotitolo + disegno + storia) -----
   function openModal(d) {
     const src = d.drawing || `assets/drawings/${d.id}.png`;
     drawingEl.src = src;
@@ -178,12 +181,27 @@
     drawingEl.onerror = () => { drawingEl.src = PLACEHOLDER; };
     titleEl.textContent = d.title || "";
     subtitleEl.textContent = d.subtitle || "";
+    summaryEl.textContent = d.summary || "";
+    storyDiv.hidden = true;
+    if (d.summary) {
+      storyBtn.hidden = false;
+      storyBtn.textContent = "Leggi la storia completa";
+    } else {
+      storyBtn.hidden = true;
+    }
     modal.hidden = false;
   }
   function closeModal() {
     modal.hidden = true;
     drawingEl.removeAttribute("src");
+    storyDiv.hidden = true;
   }
+
+  storyBtn.addEventListener("click", () => {
+    const open = !storyDiv.hidden;
+    storyDiv.hidden = open;
+    storyBtn.textContent = open ? "Leggi la storia completa" : "Nascondi la storia";
+  });
   modal.querySelectorAll("[data-close-modal]").forEach((el) => {
     el.addEventListener("click", closeModal);
   });
