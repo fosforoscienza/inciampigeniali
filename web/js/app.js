@@ -1,6 +1,6 @@
 // Router minimale + tasti globali.
 // Schermate: "presentation" e "map". L'app parte sulle slide,
-// la mappa è la sezione finale, raggiunta dopo l'ultima slide.
+// la mappa è la sezione centrale, raggiunta dopo la slide 26.
 //
 // Tasti globali:
 //   F  → fullscreen (pywebview se disponibile, altrimenti API browser)
@@ -14,7 +14,7 @@
   function show(route) {
     if (!SCREENS.includes(route)) return;
     SCREENS.forEach((r) => {
-      const el = document.querySelector(`[data-screen="${r}"]`);
+      const el = document.querySelector('[data-screen="' + r + '"]');
       if (!el) return;
       el.hidden = r !== route;
     });
@@ -25,44 +25,54 @@
   }
 
   function toggleFullscreen() {
-    // In pywebview usa l'API nativa esposta da Python (toggle_fullscreen):
-    // requestFullscreen del browser non è affidabile dentro la WebView.
     if (window.pywebview && window.pywebview.api && window.pywebview.api.toggle_fullscreen) {
       window.pywebview.api.toggle_fullscreen();
       return;
     }
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen?.();
+      document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
     } else {
-      document.exitFullscreen?.();
+      document.exitFullscreen && document.exitFullscreen();
     }
   }
 
   function toggleBlack() {
-    const el = document.getElementById("black-overlay");
+    var el = document.getElementById("black-overlay");
     if (!el) return;
     el.hidden = !el.hidden;
   }
 
+  // Toggle barra comandi (tasto C nella presentazione, pulsante "Comandi")
+  function toggleChrome() {
+    var chrome = document.getElementById("deck-chrome");
+    if (!chrome) return;
+    chrome.hidden = !chrome.hidden;
+  }
+
+  var toggleBtn = document.getElementById("deck-chrome-toggle");
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", toggleChrome);
+  }
+
   // Bottoni con data-route="..."
-  document.addEventListener("click", (e) => {
-    const route = e.target.closest("[data-route]");
+  document.addEventListener("click", function(e) {
+    var route = e.target.closest("[data-route]");
     if (route) show(route.dataset.route);
   });
 
   // Pulsante "Fine" sulla mappa → slide 27
-  const finBtn = document.getElementById("map-btn-fine");
+  var finBtn = document.getElementById("map-btn-fine");
   if (finBtn) {
-    finBtn.addEventListener("click", () => {
+    finBtn.addEventListener("click", function() {
       window.Slides && window.Slides.goToEnd();
       show("presentation");
     });
   }
 
-  // Tasti globali (F, B, M sempre attivi; frecce gestite altrove)
-  document.addEventListener("keydown", (e) => {
-    const tag = (e.target && e.target.tagName) || "";
-    if (["INPUT", "TEXTAREA"].includes(tag)) return;
+  // Tasti globali
+  document.addEventListener("keydown", function(e) {
+    var tag = (e.target && e.target.tagName) || "";
+    if (tag === "INPUT" || tag === "TEXTAREA") return;
 
     if (e.key === "F" || e.key === "f") {
       e.preventDefault();
@@ -79,18 +89,16 @@
       if (current !== "map") show("map");
       return;
     }
-    // Sulla mappa: frecce indietro tornano all'ultima slide delle slide normali,
-    // frecce avanti vanno alla slide finale (27).
-    // (Il modal e la modalità calibrazione gestiscono Esc per conto loro
-    //  con stopImmediatePropagation, quindi non tornano alle slide.)
+
+    // Sulla mappa: back → slide 26, forward → slide 27
     if (current === "map") {
-      const back = ["ArrowLeft", "ArrowUp", "PageUp", "Backspace", "Escape"];
-      const fwd  = ["ArrowRight", "ArrowDown", "PageDown", " "];
-      if (back.includes(e.key)) {
+      var back = ["ArrowLeft", "ArrowUp", "PageUp", "Backspace", "Escape"];
+      var fwd  = ["ArrowRight", "ArrowDown", "PageDown", " "];
+      if (back.indexOf(e.key) !== -1) {
         e.preventDefault();
         window.Slides && window.Slides.backFromMap();
         show("presentation");
-      } else if (fwd.includes(e.key)) {
+      } else if (fwd.indexOf(e.key) !== -1) {
         e.preventDefault();
         window.Slides && window.Slides.goToEnd();
         show("presentation");
@@ -99,7 +107,7 @@
   });
 
   window.App = {
-    show,
-    current: () => current,
+    show: show,
+    current: function() { return current; },
   };
 })();

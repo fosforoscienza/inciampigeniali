@@ -64,35 +64,28 @@ kbd {
 .deck {
   flex: 1;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem 2rem;
   overflow: hidden;
+  background: #000;
 }
 
 .slide {
   position: absolute;
-  width: min(96vw, calc((100vh - 6rem) * 16 / 9));
-  aspect-ratio: 16 / 9;
-  border-radius: 8px;
-  box-shadow: var(--paper-shadow);
-  overflow: hidden;
-  background: var(--paper);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
   opacity: 0;
-  transform: translateX(20px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition: opacity 0.35s ease;
   pointer-events: none;
 }
 .slide[data-active="true"] {
   opacity: 1;
-  transform: translateX(0);
   pointer-events: auto;
 }
 .slide__img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -139,10 +132,11 @@ kbd {
   align-items: center;
   gap: 1rem;
   padding: 0.7rem 1.5rem;
-  background: rgba(255, 250, 240, 0.65);
+  background: rgba(255, 250, 240, 0.85);
   backdrop-filter: blur(4px);
   border-top: 1px dashed rgba(43,38,34,0.18);
 }
+.deck__chrome[hidden] { display: none; }
 .deck__progress {
   font-family: var(--font-display);
   font-size: 1.4rem;
@@ -154,6 +148,27 @@ kbd {
   color: var(--ink-soft);
   font-style: italic;
 }
+
+/* Pulsante "Comandi" — discreto, angolo in basso a destra */
+.deck__chrome-toggle {
+  position: absolute;
+  bottom: 0.7rem;
+  right: 1rem;
+  background: rgba(255,250,240,0.55);
+  color: var(--ink-soft);
+  border: 1px solid rgba(43,38,34,0.2);
+  border-radius: 4px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.7rem;
+  cursor: pointer;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+  transition: opacity 0.2s;
+  opacity: 0.4;
+}
+.deck__chrome-toggle:hover { opacity: 1; }
 
 .black-overlay {
   position: fixed;

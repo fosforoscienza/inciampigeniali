@@ -1,5 +1,9 @@
-// Logica deck di slide: PNG a tutta pagina, navigazione lineare,
-// passaggio automatico alla mappa dopo l'ultima slide.
+// Logica deck di slide: PNG a tutta pagina, navigazione a 3 sezioni.
+//
+// Struttura:
+//   Sezione 1: slide 01..26  (indici 0..24)
+//   Sezione 2: mappa         (gestita da app.js / map.js)
+//   Sezione 3: slide 27      (indice 25, l'ultima)
 //
 // Tasti gestiti (compatibili con presenter Bluetooth standard):
 //   Avanti:   ArrowRight, ArrowDown, PageDown, Space
@@ -7,81 +11,86 @@
 //   Home/End: prima / ultima slide
 // (F per fullscreen, B per black, M per mappa sono gestiti in app.js)
 
-(() => {
-  // 26 slide caricate da web/assets/slides/01.png … 26.png.
-  // L'ordine è quello dei file: 01 = prima slide, 26 = ultima.
-  const SLIDE_COUNT = 27;
-  const SLIDES = Array.from({ length: SLIDE_COUNT }, (_, i) => {
-    const n = i + 1;
-    const id = String(n).padStart(2, "0");
-    return { num: n, id, title: `Slide ${n}`, img: `assets/slides/${id}.png` };
-  });
+(function() {
+  var SLIDE_COUNT = 27;
+  var SLIDES = [];
+  for (var i = 0; i < SLIDE_COUNT; i++) {
+    var n = i + 1;
+    var id = n < 10 ? "0" + n : String(n);
+    SLIDES.push({ num: n, id: id, title: "Slide " + n, img: "assets/slides/" + id + ".png" });
+  }
 
-  let currentIndex = 0;
-  let loaded = false;
+  // Indice dell'ultima slide della sezione 1 (slide 26 = indice 25)
+  var LAST_SECTION1 = SLIDE_COUNT - 2;  // 25
+  // Indice della slide finale, sezione 3 (slide 27 = indice 26)
+  var LAST_SLIDE    = SLIDE_COUNT - 1;  // 26
 
-  const deckEl = document.getElementById("deck");
-  const slideCurrentEl = document.getElementById("slide-current");
-  const slideTotalEl = document.getElementById("slide-total");
+  var currentIndex = 0;
+  var loaded = false;
+
+  var deckEl        = document.getElementById("deck");
+  var slideCurrentEl = document.getElementById("slide-current");
+  var slideTotalEl   = document.getElementById("slide-total");
 
   function buildSlides() {
     if (loaded) return;
     slideTotalEl.textContent = String(SLIDES.length);
-    SLIDES.forEach((s, i) => {
-      const el = document.createElement("section");
-      el.className = "slide";
-      el.dataset.index = String(i);
+    for (var i = 0; i < SLIDES.length; i++) {
+      (function(s, idx) {
+        var el = document.createElement("section");
+        el.className = "slide";
+        el.dataset.index = String(idx);
 
-      const img = document.createElement("img");
-      img.className = "slide__img";
-      img.src = s.img;
-      img.alt = s.title || `Slide ${s.id}`;
-      // Se il PNG non c'è ancora, mostra un placeholder testuale
-      img.onerror = () => {
-        img.remove();
-        const ph = document.createElement("div");
-        ph.className = "slide__placeholder";
-        ph.innerHTML = `
-          <span class="slide__placeholder-id">${s.id}</span>
-          <span class="slide__placeholder-title">${s.title || ""}</span>
-          <span class="slide__placeholder-hint">PNG da caricare in <code>web/${s.img}</code></span>
-        `;
-        el.appendChild(ph);
-      };
-      el.appendChild(img);
-      deckEl.appendChild(el);
-    });
+        var img = document.createElement("img");
+        img.className = "slide__img";
+        img.src = s.img;
+        img.alt = s.title;
+        img.onerror = function() {
+          img.parentNode && img.parentNode.removeChild(img);
+          var ph = document.createElement("div");
+          ph.className = "slide__placeholder";
+          ph.innerHTML =
+            '<span class="slide__placeholder-id">' + s.id + '</span>' +
+            '<span class="slide__placeholder-title">' + s.title + '</span>' +
+            '<span class="slide__placeholder-hint">PNG da caricare in <code>web/' + s.img + '</code></span>';
+          el.appendChild(ph);
+        };
+        el.appendChild(img);
+        deckEl.appendChild(el);
+      })(SLIDES[i], i);
+    }
     loaded = true;
     renderActive();
   }
 
   function renderActive() {
-    const slides = deckEl.querySelectorAll(".slide");
-    slides.forEach((s, i) => {
-      s.dataset.active = i === currentIndex ? "true" : "false";
-    });
+    var slides = deckEl.querySelectorAll(".slide");
+    for (var i = 0; i < slides.length; i++) {
+      slides[i].dataset.active = (i === currentIndex) ? "true" : "false";
+    }
     slideCurrentEl.textContent = String(currentIndex + 1);
   }
 
-  // Flusso: slide 1..26 → mappa → slide 27 (finale).
-  // L'indice della penultima slide (26) è SLIDES.length - 2.
-  // L'indice della slide finale (27) è SLIDES.length - 1.
+  // Avanti:
+  //   - slide 1..25  → slide successiva
+  //   - slide 26 (LAST_SECTION1) → mappa
+  //   - slide 27 (LAST_SLIDE)    → niente (fine)
   function next() {
-    const last = SLIDES.length - 1;        // slide 27
-    const beforeMap = SLIDES.length - 2;   // slide 26
-    if (currentIndex === last) return;     // dalla 27 in avanti non si va
-    if (currentIndex === beforeMap) {
-      // dalla 26 → mappa
+    if (currentIndex === LAST_SECTION1) {
       window.App && window.App.show("map");
       return;
     }
-    currentIndex++;
-    renderActive();
+    if (currentIndex < LAST_SLIDE) {
+      currentIndex++;
+      renderActive();
+    }
   }
+
+  // Indietro:
+  //   - slide 27 (LAST_SLIDE) → mappa
+  //   - slide 1..26           → slide precedente
   function prev() {
-    const last = SLIDES.length - 1;        // slide 27
-    if (currentIndex === last) {
-      // dalla 27 → mappa
+    if (currentIndex === LAST_SLIDE) {
       window.App && window.App.show("map");
       return;
     }
@@ -90,39 +99,51 @@
       renderActive();
     }
   }
-  function gotoLast() {
-    currentIndex = SLIDES.length - 1;
-    renderActive();
-  }
+
   function gotoFirst() {
     currentIndex = 0;
     renderActive();
   }
 
-  document.addEventListener("keydown", (e) => {
-    if (window.App && window.App.current() !== "presentation") return;
-    if (document.getElementById("modal") && !document.getElementById("modal").hidden) return;
-
-    const fwd  = ["ArrowRight", "ArrowDown", "PageDown", " "];
-    const back = ["ArrowLeft",  "ArrowUp",   "PageUp"];
-    if (fwd.includes(e.key))      { e.preventDefault(); next(); }
-    else if (back.includes(e.key)){ e.preventDefault(); prev(); }
-    else if (e.key === "Home")    { e.preventDefault(); gotoFirst(); }
-    else if (e.key === "End")     { e.preventDefault(); gotoLast(); }
-  });
-
-  function goToEnd() {
-    currentIndex = SLIDES.length - 1;
+  function gotoLast() {
+    currentIndex = LAST_SLIDE;
     renderActive();
   }
 
+  // Chiamato da app.js quando si torna dalla mappa alle slide normali (← sulla mappa)
+  function backFromMap() {
+    currentIndex = LAST_SECTION1;  // slide 26
+    renderActive();
+  }
+
+  // Chiamato da app.js quando si va avanti dalla mappa (→ sulla mappa, pulsante Fine)
+  function goToEnd() {
+    currentIndex = LAST_SLIDE;     // slide 27
+    renderActive();
+  }
+
+  document.addEventListener("keydown", function(e) {
+    if (window.App && window.App.current() !== "presentation") return;
+    var modal = document.getElementById("modal");
+    if (modal && !modal.hidden) return;
+
+    var fwd  = ["ArrowRight", "ArrowDown", "PageDown", " "];
+    var back = ["ArrowLeft",  "ArrowUp",   "PageUp"];
+    if (fwd.indexOf(e.key) !== -1)  { e.preventDefault(); next(); }
+    else if (back.indexOf(e.key) !== -1) { e.preventDefault(); prev(); }
+    else if (e.key === "Home") { e.preventDefault(); gotoFirst(); }
+    else if (e.key === "End")  { e.preventDefault(); gotoLast(); }
+  });
+
   window.Slides = {
     init: buildSlides,
-    next, prev, gotoFirst, gotoLast,
-    backFromMap: () => { currentIndex = SLIDES.length - 2; renderActive(); },
-    goToEnd,
+    next: next,
+    prev: prev,
+    gotoFirst: gotoFirst,
+    gotoLast: gotoLast,
+    backFromMap: backFromMap,
+    goToEnd: goToEnd,
   };
 
-  // costruzione immediata
   buildSlides();
 })();
