@@ -183,9 +183,9 @@
     drawingEl.onerror = () => { drawingEl.src = PLACEHOLDER; };
     titleEl.textContent = d.title || "";
     subtitleEl.textContent = d.subtitle || "";
-    summaryEl.textContent = d.summary || "";
+    summaryEl.textContent = d.story || d.summary || "";
     storyDiv.hidden = true;
-    if (d.summary) {
+    if (d.story || d.summary) {
       storyBtn.hidden = false;
       storyBtn.textContent = "Leggi la storia completa";
     } else {

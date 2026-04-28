@@ -10,7 +10,7 @@
 (() => {
   // 26 slide caricate da web/assets/slides/01.png … 26.png.
   // L'ordine è quello dei file: 01 = prima slide, 26 = ultima.
-  const SLIDE_COUNT = 26;
+  const SLIDE_COUNT = 27;
   const SLIDES = Array.from({ length: SLIDE_COUNT }, (_, i) => {
     const n = i + 1;
     const id = String(n).padStart(2, "0");
@@ -99,10 +99,16 @@
     else if (e.key === "End")     { e.preventDefault(); gotoLast(); }
   });
 
+  function goToEnd() {
+    currentIndex = SLIDES.length - 1;
+    renderActive();
+  }
+
   window.Slides = {
     init: buildSlides,
     next, prev, gotoFirst, gotoLast,
-    backFromMap: () => { gotoLast(); },
+    backFromMap: () => { currentIndex = SLIDES.length - 2; renderActive(); },
+    goToEnd,
   };
 
   // costruzione immediata

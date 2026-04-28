@@ -50,6 +50,15 @@
     if (route) show(route.dataset.route);
   });
 
+  // Pulsante "Fine" sulla mappa → slide 27
+  const finBtn = document.getElementById("map-btn-fine");
+  if (finBtn) {
+    finBtn.addEventListener("click", () => {
+      window.Slides && window.Slides.goToEnd();
+      show("presentation");
+    });
+  }
+
   // Tasti globali (F, B, M sempre attivi; frecce gestite altrove)
   document.addEventListener("keydown", (e) => {
     const tag = (e.target && e.target.tagName) || "";
@@ -70,14 +79,20 @@
       if (current !== "map") show("map");
       return;
     }
-    // Sulla mappa: frecce indietro tornano all'ultima slide.
+    // Sulla mappa: frecce indietro tornano all'ultima slide delle slide normali,
+    // frecce avanti vanno alla slide finale (27).
     // (Il modal e la modalità calibrazione gestiscono Esc per conto loro
     //  con stopImmediatePropagation, quindi non tornano alle slide.)
     if (current === "map") {
       const back = ["ArrowLeft", "ArrowUp", "PageUp", "Backspace", "Escape"];
+      const fwd  = ["ArrowRight", "ArrowDown", "PageDown", " "];
       if (back.includes(e.key)) {
         e.preventDefault();
         window.Slides && window.Slides.backFromMap();
+        show("presentation");
+      } else if (fwd.includes(e.key)) {
+        e.preventDefault();
+        window.Slides && window.Slides.goToEnd();
         show("presentation");
       }
     }
