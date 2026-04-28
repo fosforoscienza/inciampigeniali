@@ -1,11 +1,9 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Inciampi Geniali — desktop launcher.
 
 Apre una finestra nativa che mostra la UI in `web/`.
 """
-
-from __future__ import annotations
 
 import os
 import sys
@@ -17,23 +15,23 @@ WEB_DIR = os.path.join(ROOT, "web")
 ENTRY = os.path.join(WEB_DIR, "index.html")
 
 
-class Api:
+class Api(object):
     """API esposta al JavaScript via pywebview (window.pywebview.api)."""
 
-    def __init__(self) -> None:
+    def __init__(self):
         self._window = None
 
-    def set_window(self, window) -> None:
+    def set_window(self, window):
         self._window = window
 
-    def toggle_fullscreen(self) -> None:
+    def toggle_fullscreen(self):
         if self._window is not None:
             self._window.toggle_fullscreen()
 
 
-def main() -> int:
+def main():
     if not os.path.isfile(ENTRY):
-        print(f"Errore: {ENTRY} non trovato.", file=sys.stderr)
+        sys.stderr.write("Errore: {} non trovato.\n".format(ENTRY))
         return 1
 
     api = Api()
@@ -48,11 +46,9 @@ def main() -> int:
         js_api=api,
     )
     api.set_window(window)
-    # http_server=True serve i file in locale via http://, evitando
-    # le restrizioni che alcuni browser embedded applicano a file://
     webview.start(http_server=True)
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    sys.exit(main())
