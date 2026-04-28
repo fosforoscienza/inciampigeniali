@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """Inciampi Geniali — desktop launcher.
 
 Apre una finestra nativa che mostra la UI in `web/`.
