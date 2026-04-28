@@ -63,16 +63,28 @@
     slideCurrentEl.textContent = String(currentIndex + 1);
   }
 
+  // Flusso: slide 1..26 → mappa → slide 27 (finale).
+  // L'indice della penultima slide (26) è SLIDES.length - 2.
+  // L'indice della slide finale (27) è SLIDES.length - 1.
   function next() {
-    if (currentIndex < SLIDES.length - 1) {
-      currentIndex++;
-      renderActive();
-    } else {
-      // dopo l'ultima slide, entra nella mappa
+    const last = SLIDES.length - 1;        // slide 27
+    const beforeMap = SLIDES.length - 2;   // slide 26
+    if (currentIndex === last) return;     // dalla 27 in avanti non si va
+    if (currentIndex === beforeMap) {
+      // dalla 26 → mappa
       window.App && window.App.show("map");
+      return;
     }
+    currentIndex++;
+    renderActive();
   }
   function prev() {
+    const last = SLIDES.length - 1;        // slide 27
+    if (currentIndex === last) {
+      // dalla 27 → mappa
+      window.App && window.App.show("map");
+      return;
+    }
     if (currentIndex > 0) {
       currentIndex--;
       renderActive();

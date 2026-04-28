@@ -213,25 +213,27 @@ kbd {
   z-index: 2;
 }
 
-/* Pulsante "Fine" — in basso a destra sulla mappa */
+/* Pulsante "Fine" — discreto, in basso a destra sulla mappa */
 .map-btn-fine {
   position: absolute;
   bottom: 1.2rem;
   right: 1.5rem;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  letter-spacing: 0.08em;
-  padding: 0.4rem 1.4rem;
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid rgba(43,38,34,0.25);
+  border-radius: 4px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  padding: 0.25rem 0.9rem;
   cursor: pointer;
   z-index: 10;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-  transition: background 0.15s;
+  transition: color 0.15s, border-color 0.15s;
 }
-.map-btn-fine:hover { background: #4d0d05; }
+.map-btn-fine:hover {
+  color: var(--ink);
+  border-color: rgba(43,38,34,0.5);
+}
 
 /* Logo Fosforo in sovraimpressione sulla mappa, in basso al centro */
 .map-logo {
