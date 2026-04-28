@@ -28,9 +28,11 @@
   <!-- ============================================================ -->
   <section id="screen-map" class="screen screen--map" data-screen="map" hidden>
     <div id="map-container" class="map-container">
-      <img id="map-image" class="map-image" src="assets/map/planisfero.png" alt="Planisfero disegnato a mano" />
-      <div id="pins" class="pins"></div>
-      <div id="coord-readout" class="coord-readout" hidden>0.0%, 0.0%</div>
+      <div id="map-stage" class="map-stage">
+        <img id="map-image" class="map-image" src="assets/map/planisfero.png" alt="Planisfero disegnato a mano" />
+        <div id="pins" class="pins"></div>
+        <div id="coord-readout" class="coord-readout" hidden>0.0%, 0.0%</div>
+      </div>
     </div>
     <div id="calibrate-panel" class="calibrate-panel" hidden>
       <span class="calibrate-panel__label">Modalità calibrazione attiva &middot; trascina i pin, poi:</span>
@@ -40,12 +42,16 @@
   </section>
 
   <!-- ============================================================ -->
-  <!-- MODAL scoperta — solo disegno                                 -->
+  <!-- MODAL scoperta — disegno + titolo + sottotitolo               -->
   <!-- ============================================================ -->
-  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-label="Disegno della scoperta" hidden>
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
     <div class="modal__backdrop" data-close-modal></div>
     <div class="modal__panel" role="document">
       <button class="modal__close" type="button" aria-label="Chiudi" data-close-modal>&times;</button>
+      <header class="modal__header">
+        <h2 id="modal-title" class="modal__title"></h2>
+        <p id="modal-subtitle" class="modal__subtitle"></p>
+      </header>
       <img id="modal-drawing" class="modal__drawing" src="" alt="" />
     </div>
   </div>
