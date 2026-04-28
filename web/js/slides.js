@@ -129,9 +129,17 @@
 
     var fwd  = ["ArrowRight", "ArrowDown", "PageDown", " "];
     var back = ["ArrowLeft",  "ArrowUp",   "PageUp"];
-    if (fwd.indexOf(e.key) !== -1)  { e.preventDefault(); next(); }
-    else if (back.indexOf(e.key) !== -1) { e.preventDefault(); prev(); }
-    else if (e.key === "Home") { e.preventDefault(); gotoFirst(); }
+    if (fwd.indexOf(e.key) !== -1) {
+      e.preventDefault();
+      // stopImmediatePropagation evita che app.js processi lo stesso evento
+      // (es. quando next() cambia schermata a "map", app.js non deve reagire)
+      e.stopImmediatePropagation();
+      next();
+    } else if (back.indexOf(e.key) !== -1) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      prev();
+    } else if (e.key === "Home") { e.preventDefault(); gotoFirst(); }
     else if (e.key === "End")  { e.preventDefault(); gotoLast(); }
   });
 
