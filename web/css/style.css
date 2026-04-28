@@ -266,8 +266,8 @@ kbd {
 /* Pin animato */
 .pin {
   position: absolute;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   transform: translate(-50%, -100%);
   background: none;
   border: 0;
@@ -276,15 +276,21 @@ kbd {
   pointer-events: auto;
 }
 
-/* Numero dentro la testa del pin */
+/* Cerchio bianco con numero dentro la testa del pin */
 .pin__number {
   position: absolute;
+  width: 16px;
+  height: 16px;
   top: 2px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #fff;
+  left: 6px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   font-weight: 700;
   line-height: 1;
   pointer-events: none;
