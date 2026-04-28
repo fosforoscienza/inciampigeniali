@@ -44,7 +44,7 @@
   // posizione geografica reale, non quella sparsa.
   function buildSpreadMap(items) {
     const THRESHOLD = 3.5; // % distanza per considerare due pin sovrapposti
-    const SPREAD = 2.4;    // % raggio del cerchio di distribuzione
+    const SPREAD = 5.0;    // % raggio del cerchio di distribuzione
     const n = items.length;
 
     const parent = Array.from({ length: n }, (_, i) => i);
@@ -114,10 +114,12 @@
         line.setAttribute("y2", y);
         leadersLayer.appendChild(line);
 
-        const dot = document.createElementNS(SVG_NS, "circle");
+        // Ellisse che compensa il mapping non-uniforme 16:9 del viewBox 100×100
+        const dot = document.createElementNS(SVG_NS, "ellipse");
         dot.setAttribute("cx", d.xPct);
         dot.setAttribute("cy", d.yPct);
-        dot.setAttribute("r", "0.45");
+        dot.setAttribute("rx", "0.55");
+        dot.setAttribute("ry", "0.98");
         leadersLayer.appendChild(dot);
       }
 

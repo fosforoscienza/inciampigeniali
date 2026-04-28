@@ -230,24 +230,28 @@ kbd {
   opacity: 0.6;
   vector-effect: non-scaling-stroke;
 }
-.pin-leaders circle {
+.pin-leaders ellipse {
   fill: var(--accent);
-  stroke: var(--ink);
-  stroke-width: 0.1;
-  opacity: 0.85;
+  stroke: #fff;
+  stroke-width: 0.12;
+  opacity: 0.95;
 }
 
-/* Logo Fosforo in basso al centro della schermata mappa */
+/* Barra crema in fondo alla mappa con il logo Fosforo */
+.map-chrome {
+  background: var(--paper);
+  border-top: 1px dashed rgba(43,38,34,0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.4rem 1rem;
+  flex-shrink: 0;
+}
 .map-logo {
-  position: absolute;
-  bottom: 0.8rem;
-  left: 50%;
-  transform: translateX(-50%);
-  height: clamp(40px, 6vh, 70px);
+  height: clamp(28px, 4.5vh, 52px);
   width: auto;
-  pointer-events: none;
+  display: block;
   opacity: 0.92;
-  z-index: 10;
 }
 
 /* Pin animato */
