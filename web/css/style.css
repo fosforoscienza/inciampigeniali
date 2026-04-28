@@ -201,6 +201,7 @@ kbd {
   overflow: hidden;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 /* Stage largo 115% — la mappa esce leggermente dai bordi laterali
