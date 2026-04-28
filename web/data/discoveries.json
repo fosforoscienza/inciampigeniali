@@ -11,7 +11,7 @@
     "yPct": 51.1,
     "photo": "assets/photos/colombo-america.png",
     "summary": "Nel 1492 Cristoforo Colombo salpa convinto che la Terra sia molto più piccola di quanto sia, e che bastino poche miglia verso ovest per arrivare in Asia. Tiene perfino un diario di bordo falso per non far disperare l'equipaggio. Quando il 12 ottobre approda alle Bahamas, è certo di essere in Giappone: morirà nel 1506 senza ammettere di aver inciampato in un nuovo continente. Sarà Amerigo Vespucci a capirlo, e la nuova terra prenderà il suo nome.",
-    "subtitle": ""
+    "subtitle": "Cristoforo Colombo, 1492 - Palos de la Frontera (Spagna)"
   },
   {
     "id": "fleming-penicillina",
@@ -25,7 +25,7 @@
     "yPct": 37.5,
     "photo": "assets/photos/fleming-penicillina.png",
     "summary": "Estate 1928. Alexander Fleming lascia il suo laboratorio londinese per le vacanze in Scozia senza pulire le piastre di stafilococchi. Tornato il 3 settembre, sta per buttare tutto quando nota un alone perfettamente pulito attorno a una macchia di muffa: i batteri sono stati uccisi a distanza. Quel «succo di muffa» diventerà la penicillina. Prima di lui, nel 1895, l'italiano Vincenzo Tiberio aveva intuito tutto: scriveva in italiano, e nessuno lo ascoltò.",
-    "subtitle": ""
+    "subtitle": "Alexander Fleming, 1928 - Londra (Regno Unito)"
   },
   {
     "id": "de-mestral-velcro",
@@ -39,7 +39,7 @@
     "yPct": 41.6,
     "photo": "assets/photos/de-mestral-velcro.png",
     "summary": "Anni '40. L'ingegnere svizzero George de Mestral torna da una passeggiata in montagna col cane coperto di fiori di cardo. Invece di scrollarli, li mette al microscopio: ogni fiore è ricoperto di minuscoli uncini che si arpionano ai cappi del pelo. È il principio del velcro. Ci metterà dieci anni a riprodurlo industrialmente con il nylon. Brevettato nel 1955, viene ignorato finché la NASA non lo adotta sulle missioni Apollo: da rifiuto a tecnologia spaziale.",
-    "subtitle": ""
+    "subtitle": "George de Mestral, 1940 - Aubonne (Svizzera)"
   },
   {
     "id": "goodyear-gomma",
@@ -53,7 +53,7 @@
     "yPct": 41.6,
     "photo": "assets/photos/goodyear-gomma.png",
     "summary": "1839, Massachusetts. Charles Goodyear, sull'orlo della rovina, è ossessionato dall'idea di rendere la gomma stabile al caldo e al freddo. Mentre la moglie cucina, lascia cadere per sbaglio un campione di gomma e zolfo sulla stufa. Lo nasconde nel forno per non farsi sgridare. A cena lo recupera e scopre che è diventato elastico, resistente, lavorabile. È la vulcanizzazione, oggi alla base degli pneumatici. Goodyear morirà nel 1860 carico di debiti, derubato del brevetto.",
-    "subtitle": ""
+    "subtitle": "Charles Goodyear, 1839 - New York (USA)"
   },
   {
     "id": "fielding-pluriball",
@@ -67,7 +67,7 @@
     "yPct": 42.0,
     "photo": "assets/photos/fielding-pluriball.png",
     "summary": "1957, New Jersey. Alfred Fielding e Marc Chavannes vogliono inventare una carta da parati 3D saldando due tende da doccia con bolle d'aria in mezzo. Nessuno la vuole. Riprovano come isolante per serre: fallimento. Per tre anni il prodotto resta invenduto. Nel 1960 IBM cerca un imballaggio per spedire i suoi computer 1401 senza romperli: Fielding ha l'illuminazione, propone le bolle, IBM firma. Nasce la Sealed Air, e con lei il Pluriball.",
-    "subtitle": ""
+    "subtitle": "Alfred Fielding e Marc Chavannes, 1957 - New Jersey (USA)"
   },
   {
     "id": "benedictus-vetro",
@@ -81,11 +81,11 @@
     "yPct": 41.7,
     "photo": "assets/photos/benedictus-vetro.png",
     "summary": "1903, Parigi. Il chimico Édouard Bénédictus, sistemando il laboratorio, fa cadere una fiala. Si aspetta cocci ovunque, ma il vetro resta intero, solo crepato come una ragnatela: dentro c'era stato del nitrato di cellulosa che, evaporando, aveva lasciato una pellicola adesiva. Anni dopo, leggendo di una bambina sfigurata in un incidente d'auto, ricorda l'episodio e inventa il Triplex, primo vetro stratificato. La Grande Guerra lo imporrà nelle maschere antigas dei soldati.",
-    "subtitle": ""
+    "subtitle": "Édouard Benedictus, 1903 - Parigi (Francia)"
   },
   {
     "id": "wells-gas-esilarante",
-    "title": "Gas esilarante e anestesia",
+    "title": "Gas esilarante",
     "author": "Horace Wells",
     "year": 1844,
     "location": "Hartford, Connecticut",
@@ -95,7 +95,7 @@
     "yPct": 37.9,
     "photo": "assets/photos/wells-gas-esilarante.png",
     "summary": "1844, Hartford, Connecticut. Il dentista Horace Wells assiste a uno spettacolo di «gas esilarante» (protossido d'azoto), allora usato solo per far ridere. Un volontario si ferisce alla gamba sotto effetto del gas e non se ne accorge nemmeno. Wells intuisce: si fa estrarre un dente sotto anestesia e funziona. Ma la dimostrazione pubblica a Boston va male: viene fischiato come imbroglione. Cadrà in depressione e si toglierà la vita, mentre il mondo gli darà ragione.",
-    "subtitle": ""
+    "subtitle": "Horace Wells, 1844 - Hartford, Connecticut (USA)"
   },
   {
     "id": "hofmann-lsd",
@@ -109,7 +109,7 @@
     "yPct": 42.3,
     "photo": "assets/photos/hofmann-lsd.png",
     "summary": "19 aprile 1943, Basilea. Albert Hofmann, chimico Sandoz, sta studiando l'ergot, fungo della segale, in cerca di un farmaco per cuore e polmoni. Cinque anni prima aveva accantonato il composto LSD-25 come fallimento. Una «chiamata interiore» lo riporta sopra. Una piccolissima dose entra in contatto con la pelle: percepisce alterazioni inquietanti. Tre giorni dopo si autosomministra 250 microgrammi e torna a casa in bicicletta nel primo «trip» della storia: il Bicycle Day.",
-    "subtitle": ""
+    "subtitle": "Albert Hofmann, 1943 - Basilea (Svizzera)"
   },
   {
     "id": "gin-tonic",
@@ -123,7 +123,7 @@
     "yPct": 50.9,
     "photo": "assets/photos/gin-tonic.png",
     "summary": "XIX secolo, India coloniale britannica. La malaria decima le truppe e l'unica difesa è il chinino, amarissimo. I soldati lo sciolgono in acqua zuccherata: è ancora una tortura per il palato. Un ufficiale anonimo ha l'idea di mescolare il chinino con la razione di gin, aggiungendo lime contro lo scorbuto. Nasce il gin tonic, prima razione di sopravvivenza, poi fenomeno globale. Churchill dirà che «ha salvato più vite e menti inglesi di tutti i medici dell'Impero».",
-    "subtitle": ""
+    "subtitle": "Impero Britannico, XIX secolo - India"
   },
   {
     "id": "pfizer-viagra",
@@ -137,7 +137,7 @@
     "yPct": 38.3,
     "photo": "assets/photos/pfizer-viagra.png",
     "summary": "Nel 1989 a Sandwich, Inghilterra, il team Pfizer guidato da David Brown sintetizza il sildenafil, candidato farmaco contro l'angina. I test deludono: l'effetto sul cuore è modesto. Stanno per chiudere il programma quando le infermiere notano che i volontari maschi nascondono un effetto collaterale imbarazzante. Le pillole vengono restituite con riluttanza. Brown intuisce e riconverte la ricerca: nel 1998 nasce il Viagra, prima cura orale per la disfunzione erettile.",
-    "subtitle": ""
+    "subtitle": "Pfizer, 1991 - Sandwich (Regno Unito)"
   },
   {
     "id": "alexander-chemio",
@@ -151,7 +151,7 @@
     "yPct": 43.7,
     "photo": "assets/photos/alexander-chemio.png",
     "summary": "2 dicembre 1943. La Luftwaffe attacca il porto di Bari. Salta la SS John Harvey, carica in segreto di iprite, il gas mostarda. Centinaia di marinai nuotano in una miscela di nafta e gas. Nei giorni dopo muoiono in modo strano: i loro globuli bianchi sono spariti. Il medico militare Stewart Alexander unisce i puntini con i farmacologi Goodman e Gilman a Yale: se il gas distrugge le cellule che si dividono in fretta, può colpire anche il cancro. Nasce la chemioterapia.",
-    "subtitle": ""
+    "subtitle": "Stewart Francis Alexander, 1942 - Bari (Italia)"
   },
   {
     "id": "fahlberg-saccarina",
@@ -165,6 +165,6 @@
     "yPct": 43.5,
     "photo": "assets/photos/fahlberg-saccarina.png",
     "summary": "1878, Baltimora, Johns Hopkins. Constantin Fahlberg lavora ai derivati del catrame di carbon fossile. Una sera, di fretta, cena senza lavarsi bene le mani. Il pane è dolcissimo, il tovagliolo lo è ancora di più, perfino l'acqua sembra sciroppo. Capisce che il sapore viene da lui. Torna in laboratorio nella notte e assaggia i becher: il colpevole è l'orto-sulfobenzoimmide, che battezza saccarina. Brevetta tutto a suo nome, infuriando il professor Remsen.",
-    "subtitle": ""
+    "subtitle": "Constantin Fahlberg, 1878 - Johns Hopkins University, Baltimore (USA)"
   }
 ]
