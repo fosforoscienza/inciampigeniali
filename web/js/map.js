@@ -9,11 +9,8 @@
   let discoveries = [];
   let calibrating = false;
 
-  const SVG_NS = "http://www.w3.org/2000/svg";
-
   const mapStage = document.getElementById("map-stage");
   const pinsLayer = document.getElementById("pins");
-  const leadersLayer = document.getElementById("pin-leaders");
   const modal = document.getElementById("modal");
   const drawingEl = document.getElementById("modal-drawing");
   const titleEl = document.getElementById("modal-title");
@@ -38,96 +35,17 @@
     renderPins();
   }
 
-  // ----- Spread automatico dei pin sovrapposti -----
-  // Raggruppa i pin vicini con union-find e li dispone in cerchio
-  // attorno al loro centroide. In modalità calibrazione si usa la
-  // posizione geografica reale, non quella sparsa.
-  function buildSpreadMap(items) {
-    const THRESHOLD = 3.5; // % distanza per considerare due pin sovrapposti
-    const SPREAD = 5.0;    // % raggio del cerchio di distribuzione
-    const n = items.length;
-
-    const parent = Array.from({ length: n }, (_, i) => i);
-    function find(i) {
-      while (parent[i] !== i) { parent[i] = parent[parent[i]]; i = parent[i]; }
-      return i;
-    }
-
-    for (let i = 0; i < n; i++) {
-      for (let j = i + 1; j < n; j++) {
-        const dx = items[i].xPct - items[j].xPct;
-        const dy = items[i].yPct - items[j].yPct;
-        if (Math.sqrt(dx * dx + dy * dy) < THRESHOLD) {
-          parent[find(i)] = find(j);
-        }
-      }
-    }
-
-    const groups = new Map();
-    for (let i = 0; i < n; i++) {
-      const root = find(i);
-      if (!groups.has(root)) groups.set(root, []);
-      groups.get(root).push(i);
-    }
-
-    const result = new Map();
-    groups.forEach((group) => {
-      if (group.length === 1) {
-        const d = items[group[0]];
-        result.set(d.id, { x: d.xPct, y: d.yPct });
-        return;
-      }
-      const cx = group.reduce((s, i) => s + items[i].xPct, 0) / group.length;
-      const cy = group.reduce((s, i) => s + items[i].yPct, 0) / group.length;
-      group.forEach((idx, k) => {
-        const angle = (2 * Math.PI * k) / group.length - Math.PI / 2;
-        result.set(items[idx].id, {
-          x: cx + SPREAD * Math.cos(angle),
-          y: cy + SPREAD * Math.sin(angle),
-        });
-      });
-    });
-
-    return result;
-  }
-
   function renderPins() {
     pinsLayer.innerHTML = "";
-    leadersLayer.innerHTML = "";
-    const spreadMap = calibrating ? null : buildSpreadMap(discoveries);
 
     discoveries.forEach((d) => {
       if (typeof d.xPct !== "number" || typeof d.yPct !== "number") return;
 
-      const pos = spreadMap ? spreadMap.get(d.id) : { x: d.xPct, y: d.yPct };
-      const x = pos ? pos.x : d.xPct;
-      const y = pos ? pos.y : d.yPct;
-
-      // Se il pin è stato spostato per evitare la sovrapposizione, traccia
-      // una linea tratteggiata che lo collega al punto geografico reale.
-      const moved = Math.hypot(x - d.xPct, y - d.yPct) > 0.2;
-      if (moved && !calibrating) {
-        const line = document.createElementNS(SVG_NS, "line");
-        line.setAttribute("x1", d.xPct);
-        line.setAttribute("y1", d.yPct);
-        line.setAttribute("x2", x);
-        line.setAttribute("y2", y);
-        leadersLayer.appendChild(line);
-
-        // Ellisse che compensa il mapping non-uniforme 16:9 del viewBox 100×100
-        const dot = document.createElementNS(SVG_NS, "ellipse");
-        dot.setAttribute("cx", d.xPct);
-        dot.setAttribute("cy", d.yPct);
-        dot.setAttribute("rx", "0.55");
-        dot.setAttribute("ry", "0.98");
-        leadersLayer.appendChild(dot);
-      }
-
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "pin";
-      btn.style.left = `${x}%`;
-      btn.style.top = `${y}%`;
+      btn.style.left = `${d.xPct}%`;
+      btn.style.top = `${d.yPct}%`;
       btn.setAttribute("aria-label", `${d.title} — ${d.author}`);
       btn.dataset.id = d.id;
 
@@ -216,7 +134,6 @@
     document.body.classList.toggle("calibrating", on);
     calibratePanel.hidden = !on;
     if (!on) readout.hidden = true;
-    renderPins(); // ri-renderizza con o senza spread
   }
 
   document.addEventListener("keydown", (e) => {

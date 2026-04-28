@@ -188,12 +188,13 @@ kbd {
   align-items: center;
 }
 
-/* Stage largo 100% — la mappa riempie tutta la larghezza.
-   L'altezza segue dall'aspect-ratio; se eccede, viene tagliata in alto/basso. */
+/* Stage largo 115% — la mappa esce leggermente dai bordi laterali
+   (15% in più), l'overflow del .map-container la ritaglia.
+   I pin restano ancorati in % dello stage. */
 .map-stage {
   position: relative;
   aspect-ratio: 16 / 9;
-  width: 100%;
+  width: 115%;
   flex-shrink: 0;
 }
 .map-image {
@@ -212,46 +213,16 @@ kbd {
   z-index: 2;
 }
 
-/* Linee tratteggiate dai pin spostati al loro punto reale sulla mappa */
-.pin-leaders {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-  overflow: visible;
-}
-.pin-leaders line {
-  stroke: var(--ink);
-  stroke-width: 0.18;
-  stroke-dasharray: 0.9 0.7;
-  stroke-linecap: round;
-  opacity: 0.6;
-  vector-effect: non-scaling-stroke;
-}
-.pin-leaders ellipse {
-  fill: var(--accent);
-  stroke: #fff;
-  stroke-width: 0.12;
-  opacity: 0.95;
-}
-
-/* Barra crema in fondo alla mappa con il logo Fosforo */
-.map-chrome {
-  background: var(--paper);
-  border-top: 1px dashed rgba(43,38,34,0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.4rem 1rem;
-  flex-shrink: 0;
-}
+/* Logo Fosforo in sovraimpressione sulla mappa, in basso al centro */
 .map-logo {
-  height: clamp(28px, 4.5vh, 52px);
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  height: clamp(36px, 6vh, 64px);
   width: auto;
-  display: block;
-  opacity: 0.92;
+  pointer-events: none;
+  z-index: 10;
 }
 
 /* Pin animato */
