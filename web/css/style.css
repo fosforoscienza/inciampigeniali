@@ -2,6 +2,14 @@
    Inciampi Geniali — design system (versione PNG-per-slide)
    ============================================================ */
 
+@font-face {
+  font-family: "Motter Corpus";
+  src: url("../assets/fonts/Motter Corpus Std Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 *,
 *::before,
 *::after { box-sizing: border-box; }
@@ -13,7 +21,7 @@
   --ink-soft: #5b5247;
   --accent: #7d1d12;
   --paper-shadow: 0 6px 28px rgba(60, 40, 20, 0.18);
-  --font-display: "Bebas Neue", "Anton", "Oswald", "Impact", sans-serif;
+  --font-display: "Motter Corpus", "Bebas Neue", "Anton", "Oswald", "Impact", sans-serif;
   --font-serif: "Lora", Georgia, "Times New Roman", serif;
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
