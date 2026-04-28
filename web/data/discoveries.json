@@ -14,6 +14,20 @@
     "subtitle": "Cristoforo Colombo, 1492 - Palos de la Frontera (Spagna)"
   },
   {
+    "id": "pfizer-viagra",
+    "title": "Viagra",
+    "author": "Team Pfizer (David Brown)",
+    "year": 1989,
+    "location": "Sandwich, Regno Unito",
+    "lat": 51.27,
+    "lng": 1.34,
+    "xPct": 47.3,
+    "yPct": 38.3,
+    "photo": "assets/photos/pfizer-viagra.png",
+    "summary": "Nel 1989 a Sandwich, Inghilterra, il team Pfizer guidato da David Brown sintetizza il sildenafil, candidato farmaco contro l'angina. I test deludono: l'effetto sul cuore è modesto. Stanno per chiudere il programma quando le infermiere notano che i volontari maschi nascondono un effetto collaterale imbarazzante. Le pillole vengono restituite con riluttanza. Brown intuisce e riconverte la ricerca: nel 1998 nasce il Viagra, prima cura orale per la disfunzione erettile.",
+    "subtitle": "Pfizer, 1991 - Sandwich (Regno Unito)"
+  },
+  {
     "id": "fleming-penicillina",
     "title": "Penicillina",
     "author": "Alexander Fleming",
@@ -124,20 +138,6 @@
     "photo": "assets/photos/gin-tonic.png",
     "summary": "XIX secolo, India coloniale britannica. La malaria decima le truppe e l'unica difesa è il chinino, amarissimo. I soldati lo sciolgono in acqua zuccherata: è ancora una tortura per il palato. Un ufficiale anonimo ha l'idea di mescolare il chinino con la razione di gin, aggiungendo lime contro lo scorbuto. Nasce il gin tonic, prima razione di sopravvivenza, poi fenomeno globale. Churchill dirà che «ha salvato più vite e menti inglesi di tutti i medici dell'Impero».",
     "subtitle": "Impero Britannico, XIX secolo - India"
-  },
-  {
-    "id": "pfizer-viagra",
-    "title": "Viagra",
-    "author": "Team Pfizer (David Brown)",
-    "year": 1989,
-    "location": "Sandwich, Regno Unito",
-    "lat": 51.27,
-    "lng": 1.34,
-    "xPct": 47.3,
-    "yPct": 38.3,
-    "photo": "assets/photos/pfizer-viagra.png",
-    "summary": "Nel 1989 a Sandwich, Inghilterra, il team Pfizer guidato da David Brown sintetizza il sildenafil, candidato farmaco contro l'angina. I test deludono: l'effetto sul cuore è modesto. Stanno per chiudere il programma quando le infermiere notano che i volontari maschi nascondono un effetto collaterale imbarazzante. Le pillole vengono restituite con riluttanza. Brown intuisce e riconverte la ricerca: nel 1998 nasce il Viagra, prima cura orale per la disfunzione erettile.",
-    "subtitle": "Pfizer, 1991 - Sandwich (Regno Unito)"
   },
   {
     "id": "alexander-chemio",

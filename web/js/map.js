@@ -38,7 +38,7 @@
   function renderPins() {
     pinsLayer.innerHTML = "";
 
-    discoveries.forEach((d) => {
+    discoveries.forEach((d, i) => {
       if (typeof d.xPct !== "number" || typeof d.yPct !== "number") return;
 
       const btn = document.createElement("button");
@@ -48,6 +48,12 @@
       btn.style.top = `${d.yPct}%`;
       btn.setAttribute("aria-label", `${d.title} — ${d.author}`);
       btn.dataset.id = d.id;
+
+      // Numero progressivo dentro la testa del pin
+      const num = document.createElement("span");
+      num.className = "pin__number";
+      num.textContent = String(i + 1);
+      btn.appendChild(num);
 
       // Tooltip al passaggio del mouse (titolo della scoperta)
       const tooltip = document.createElement("span");

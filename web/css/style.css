@@ -276,6 +276,21 @@ kbd {
   pointer-events: auto;
 }
 
+/* Numero dentro la testa del pin */
+.pin__number {
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 1;
+}
+
 /* Tooltip al passaggio del mouse: mostra il titolo della scoperta */
 .pin__tooltip {
   position: absolute;
