@@ -16,12 +16,27 @@ WEB_DIR = os.path.join(ROOT, "web")
 ENTRY = os.path.join(WEB_DIR, "index.html")
 
 
+class Api:
+    """API esposta al JavaScript via pywebview (window.pywebview.api)."""
+
+    def __init__(self) -> None:
+        self._window = None
+
+    def set_window(self, window) -> None:
+        self._window = window
+
+    def toggle_fullscreen(self) -> None:
+        if self._window is not None:
+            self._window.toggle_fullscreen()
+
+
 def main() -> int:
     if not os.path.isfile(ENTRY):
         print(f"Errore: {ENTRY} non trovato.", file=sys.stderr)
         return 1
 
-    webview.create_window(
+    api = Api()
+    window = webview.create_window(
         title="Inciampi Geniali",
         url=ENTRY,
         width=1280,
@@ -29,7 +44,9 @@ def main() -> int:
         min_size=(960, 600),
         resizable=True,
         confirm_close=False,
+        js_api=api,
     )
+    api.set_window(window)
     # http_server=True serve i file in locale via http://, evitando
     # le restrizioni che alcuni browser embedded applicano a file://
     webview.start(http_server=True)

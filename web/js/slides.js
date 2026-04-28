@@ -4,8 +4,8 @@
 // Tasti gestiti (compatibili con presenter Bluetooth standard):
 //   Avanti:   ArrowRight, ArrowDown, PageDown, Space
 //   Indietro: ArrowLeft,  ArrowUp,   PageUp
-//   Black:    B / .
 //   Home/End: prima / ultima slide
+// (F per fullscreen, B per black, M per mappa sono gestiti in app.js)
 
 (() => {
   // 26 slide caricate da web/assets/slides/01.png … 26.png.
@@ -23,7 +23,6 @@
   const deckEl = document.getElementById("deck");
   const slideCurrentEl = document.getElementById("slide-current");
   const slideTotalEl = document.getElementById("slide-total");
-  const blackEl = document.getElementById("black-overlay");
 
   function buildSlides() {
     if (loaded) return;
@@ -87,10 +86,6 @@
     currentIndex = 0;
     renderActive();
   }
-  function toggleBlack() {
-    if (!blackEl) return;
-    blackEl.hidden = !blackEl.hidden;
-  }
 
   document.addEventListener("keydown", (e) => {
     if (window.App && window.App.current() !== "presentation") return;
@@ -102,10 +97,6 @@
     else if (back.includes(e.key)){ e.preventDefault(); prev(); }
     else if (e.key === "Home")    { e.preventDefault(); gotoFirst(); }
     else if (e.key === "End")     { e.preventDefault(); gotoLast(); }
-    else if (e.key === "B" || e.key === "b" || e.key === ".") {
-      e.preventDefault();
-      toggleBlack();
-    }
   });
 
   window.Slides = {

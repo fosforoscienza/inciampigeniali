@@ -9,8 +9,11 @@
   let discoveries = [];
   let calibrating = false;
 
+  const SVG_NS = "http://www.w3.org/2000/svg";
+
   const mapStage = document.getElementById("map-stage");
   const pinsLayer = document.getElementById("pins");
+  const leadersLayer = document.getElementById("pin-leaders");
   const modal = document.getElementById("modal");
   const drawingEl = document.getElementById("modal-drawing");
   const titleEl = document.getElementById("modal-title");
@@ -90,6 +93,7 @@
 
   function renderPins() {
     pinsLayer.innerHTML = "";
+    leadersLayer.innerHTML = "";
     const spreadMap = calibrating ? null : buildSpreadMap(discoveries);
 
     discoveries.forEach((d) => {
@@ -98,6 +102,24 @@
       const pos = spreadMap ? spreadMap.get(d.id) : { x: d.xPct, y: d.yPct };
       const x = pos ? pos.x : d.xPct;
       const y = pos ? pos.y : d.yPct;
+
+      // Se il pin è stato spostato per evitare la sovrapposizione, traccia
+      // una linea tratteggiata che lo collega al punto geografico reale.
+      const moved = Math.hypot(x - d.xPct, y - d.yPct) > 0.2;
+      if (moved && !calibrating) {
+        const line = document.createElementNS(SVG_NS, "line");
+        line.setAttribute("x1", d.xPct);
+        line.setAttribute("y1", d.yPct);
+        line.setAttribute("x2", x);
+        line.setAttribute("y2", y);
+        leadersLayer.appendChild(line);
+
+        const dot = document.createElementNS(SVG_NS, "circle");
+        dot.setAttribute("cx", d.xPct);
+        dot.setAttribute("cy", d.yPct);
+        dot.setAttribute("r", "0.45");
+        leadersLayer.appendChild(dot);
+      }
 
       const btn = document.createElement("button");
       btn.type = "button";

@@ -18,9 +18,8 @@
     <div id="deck" class="deck" aria-live="polite"></div>
     <div class="deck__chrome">
       <span class="deck__progress"><span id="slide-current">1</span>&thinsp;/&thinsp;<span id="slide-total">1</span></span>
-      <span class="deck__hint">← / →&nbsp; per navigare &nbsp;·&nbsp; <kbd>F</kbd>&nbsp;fullscreen</span>
+      <span class="deck__hint">← / →&nbsp; per navigare &nbsp;·&nbsp; <kbd>F</kbd>&nbsp;fullscreen &nbsp;·&nbsp; <kbd>M</kbd>&nbsp;mappa</span>
     </div>
-    <div id="black-overlay" class="black-overlay" hidden></div>
   </section>
 
   <!-- ============================================================ -->
@@ -30,16 +29,21 @@
     <div id="map-container" class="map-container">
       <div id="map-stage" class="map-stage">
         <img id="map-image" class="map-image" src="assets/map/planisfero.png" alt="Planisfero disegnato a mano" />
+        <svg id="pin-leaders" class="pin-leaders" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
         <div id="pins" class="pins"></div>
         <div id="coord-readout" class="coord-readout" hidden>0.0%, 0.0%</div>
       </div>
     </div>
+    <img class="map-logo" src="assets/decor/logo-fosforo.png" alt="Fosforo Scienza" />
     <div id="calibrate-panel" class="calibrate-panel" hidden>
       <span class="calibrate-panel__label">Modalità calibrazione attiva &middot; trascina i pin, poi:</span>
       <button id="copy-coords" class="chrome-btn" type="button">Copia coordinate</button>
       <button id="exit-calibrate" class="chrome-btn" type="button">Esci (C)</button>
     </div>
   </section>
+
+  <!-- Overlay nero globale, attivato col tasto B -->
+  <div id="black-overlay" class="black-overlay" hidden></div>
 
   <!-- ============================================================ -->
   <!-- MODAL scoperta — disegno + titolo + sottotitolo               -->
