@@ -282,7 +282,7 @@ body.calibrating .pin__tooltip { display: none; }
   background: var(--accent);
   border-radius: 50% 50% 50% 0;
   transform: rotate(-45deg);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.25);
+  box-shadow: 0 0 0 2.5px #fff, 0 4px 6px rgba(0,0,0,0.3);
   animation: pin-pulse 2s ease-in-out infinite;
 }
 .pin::after {
