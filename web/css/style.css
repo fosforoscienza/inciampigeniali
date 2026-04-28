@@ -179,25 +179,22 @@ kbd {
 }
 .chrome-btn:hover { background: rgba(43,38,34,0.08); }
 
-/* Container occupa tutto lo spazio rimasto, senza padding */
+/* Container occupa tutto lo spazio rimasto */
 .map-container {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   min-height: 0;
   overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 
-/* Lo "stage" è un rettangolo 16:9 che riempie lo spazio disponibile.
-   I pin sono posizionati in % di questa area, quindi sono ancorati
-   esattamente all'immagine. */
+/* Stage largo 100% — la mappa riempie tutta la larghezza.
+   L'altezza segue dall'aspect-ratio; se eccede, viene tagliata in alto/basso. */
 .map-stage {
   position: relative;
   aspect-ratio: 16 / 9;
   width: 100%;
-  height: auto;
-  max-height: 100%;
+  flex-shrink: 0;
 }
 .map-image {
   position: absolute;
