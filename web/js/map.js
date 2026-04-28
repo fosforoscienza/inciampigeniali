@@ -35,15 +35,75 @@
     renderPins();
   }
 
+  // ----- Spread automatico dei pin sovrapposti -----
+  // Raggruppa i pin vicini con union-find e li dispone in cerchio
+  // attorno al loro centroide. In modalità calibrazione si usa la
+  // posizione geografica reale, non quella sparsa.
+  function buildSpreadMap(items) {
+    const THRESHOLD = 3.5; // % distanza per considerare due pin sovrapposti
+    const SPREAD = 2.4;    // % raggio del cerchio di distribuzione
+    const n = items.length;
+
+    const parent = Array.from({ length: n }, (_, i) => i);
+    function find(i) {
+      while (parent[i] !== i) { parent[i] = parent[parent[i]]; i = parent[i]; }
+      return i;
+    }
+
+    for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        const dx = items[i].xPct - items[j].xPct;
+        const dy = items[i].yPct - items[j].yPct;
+        if (Math.sqrt(dx * dx + dy * dy) < THRESHOLD) {
+          parent[find(i)] = find(j);
+        }
+      }
+    }
+
+    const groups = new Map();
+    for (let i = 0; i < n; i++) {
+      const root = find(i);
+      if (!groups.has(root)) groups.set(root, []);
+      groups.get(root).push(i);
+    }
+
+    const result = new Map();
+    groups.forEach((group) => {
+      if (group.length === 1) {
+        const d = items[group[0]];
+        result.set(d.id, { x: d.xPct, y: d.yPct });
+        return;
+      }
+      const cx = group.reduce((s, i) => s + items[i].xPct, 0) / group.length;
+      const cy = group.reduce((s, i) => s + items[i].yPct, 0) / group.length;
+      group.forEach((idx, k) => {
+        const angle = (2 * Math.PI * k) / group.length - Math.PI / 2;
+        result.set(items[idx].id, {
+          x: cx + SPREAD * Math.cos(angle),
+          y: cy + SPREAD * Math.sin(angle),
+        });
+      });
+    });
+
+    return result;
+  }
+
   function renderPins() {
     pinsLayer.innerHTML = "";
+    const spreadMap = calibrating ? null : buildSpreadMap(discoveries);
+
     discoveries.forEach((d) => {
       if (typeof d.xPct !== "number" || typeof d.yPct !== "number") return;
+
+      const pos = spreadMap ? spreadMap.get(d.id) : { x: d.xPct, y: d.yPct };
+      const x = pos ? pos.x : d.xPct;
+      const y = pos ? pos.y : d.yPct;
+
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "pin";
-      btn.style.left = `${d.xPct}%`;
-      btn.style.top = `${d.yPct}%`;
+      btn.style.left = `${x}%`;
+      btn.style.top = `${y}%`;
       btn.setAttribute("aria-label", `${d.title} — ${d.author}`);
       btn.dataset.id = d.id;
 
@@ -132,6 +192,7 @@
     document.body.classList.toggle("calibrating", on);
     calibratePanel.hidden = !on;
     if (!on) readout.hidden = true;
+    renderPins(); // ri-renderizza con o senza spread
   }
 
   document.addEventListener("keydown", (e) => {
