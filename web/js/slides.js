@@ -66,7 +66,25 @@
   function renderActive() {
     var slides = deckEl.querySelectorAll(".slide");
     for (var i = 0; i < slides.length; i++) {
-      slides[i].dataset.active = (i === currentIndex) ? "true" : "false";
+      var s = slides[i];
+      var wasActive = s.dataset.active === "true";
+      if (i === currentIndex) {
+        s.dataset.active = "true";
+        s.dataset.leaving = "false";
+      } else {
+        s.dataset.active = "false";
+        if (wasActive) {
+          // Slide appena lasciata: in dissolvenza sopra la nuova
+          s.dataset.leaving = "true";
+          (function(slide) {
+            setTimeout(function() {
+              if (slide.dataset.active === "false") {
+                slide.dataset.leaving = "false";
+              }
+            }, 400);
+          })(s);
+        }
+      }
     }
     slideCurrentEl.textContent = String(currentIndex + 1);
   }
