@@ -38,7 +38,8 @@
 
   var LAST_SECTION1 = SLIDE_COUNT - 2;  // 25 (slide 26)
   var LAST_SLIDE    = SLIDE_COUNT - 1;  // 26 (slide 27)
-  var TRANSITION_MS = 400;
+  var TRANSITION_MS  = 400;   // cross-dissolve standard (PNG)
+  var MAGIC_MOVE_MS  = 1000;  // durata Magic Move tra slide SVG
 
   var currentIndex = 0;
   var loaded = false;
@@ -138,6 +139,11 @@
       }
     }
 
+    var nextActive = slides[currentIndex];
+    var isSvgToSvg = prevActive && prevActive.dataset.kind === "svg" &&
+                     nextActive && nextActive.dataset.kind === "svg";
+    var duration = isSvgToSvg ? MAGIC_MOVE_MS : TRANSITION_MS;
+
     for (var i = 0; i < slides.length; i++) {
       var s = slides[i];
       var wasActive = s.dataset.active === "true";
@@ -147,23 +153,23 @@
       } else {
         s.dataset.active = "false";
         if (wasActive) {
+          // Override della durata della transizione per SVG → SVG
+          s.style.transition = "opacity " + (duration / 1000) + "s ease";
           s.dataset.leaving = "true";
-          (function(slide) {
+          (function(slide, dur) {
             setTimeout(function() {
               if (slide.dataset.active === "false") {
                 slide.dataset.leaving = "false";
+                slide.style.transition = "";
               }
-            }, TRANSITION_MS);
-          })(s);
+            }, dur);
+          })(s, duration);
         }
       }
     }
 
-    // Magic Move tra due slide SVG consecutive
-    var nextActive = slides[currentIndex];
-    if (prevActive && prevActive.dataset.kind === "svg" &&
-        nextActive && nextActive.dataset.kind === "svg") {
-      magicMove(prevActive, nextActive, TRANSITION_MS);
+    if (isSvgToSvg) {
+      magicMove(prevActive, nextActive, duration);
     }
 
     slideCurrentEl.textContent = String(currentIndex + 1);
@@ -219,6 +225,16 @@
         // Nascondi l'omologo nella slide di partenza (no doppione)
         var prevFromOpacity = fromEl.style.opacity;
         fromEl.style.opacity = "0";
+
+        // Se le due posizioni coincidono (es. sfondo identico),
+        // niente transform: l'elemento resta visivamente fermo.
+        if (Math.abs(dx) < 1 && Math.abs(dy) < 1 &&
+            Math.abs(sx - 1) < 0.01 && Math.abs(sy - 1) < 0.01) {
+          setTimeout(function() {
+            fromEl.style.opacity = prevFromOpacity || "";
+          }, durationMs + 50);
+          return;
+        }
 
         // FLIP: posiziona l'elemento di destinazione sulla posizione
         // di partenza, poi anima alla posizione naturale.
