@@ -276,23 +276,18 @@ kbd {
   pointer-events: auto;
 }
 
-/* Cerchio bianco con numero dentro la testa del pin */
+/* Numero bianco dentro la testa del pin */
 .pin__number {
   position: absolute;
-  width: 16px;
-  height: 16px;
   top: 2px;
-  left: 6px;
-  background: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-size: 0.65rem;
-  font-weight: 700;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 400;
   line-height: 1;
+  letter-spacing: 0.02em;
   pointer-events: none;
   z-index: 1;
 }
