@@ -11,7 +11,7 @@
 	.st5{font-family:'Quattrocento-Bold';}
 	.st6{font-size:32.6079px;}
 </style>
-<image style="overflow:visible;enable-background:new    ;" width="3840" height="2160" id="sfondo" xlink:href="Inciampi geniali (1).png"  transform="matrix(0.375 0 0 0.375 0 0)">
+<image style="overflow:visible;enable-background:new    ;" width="3840" height="2160" id="sfondo" xlink:href="sfondo.png"  transform="matrix(0.375 0 0 0.375 0 0)">
 </image>
 <g id="precoce">
 	<path d="M360,198.1c-3.2,0.4-5.8,1.1-6.5,2.2c-1.1,1.4-2.9,2.5-4,2.5h-1.1l0.7-0.4c1.1-0.4,1.4-1.4,1.1-1.8c0,0-1.8-0.4-3.6-0.7

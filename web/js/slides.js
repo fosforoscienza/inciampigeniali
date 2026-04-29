@@ -20,7 +20,7 @@
 
 (function() {
   var SLIDE_COUNT = 27;
-  var SVG_SLIDES = [23, 24, 25];  // numeri (1-based) delle slide SVG
+  var SVG_SLIDES = [22, 23, 24, 25];  // numeri (1-based) delle slide SVG
 
   var SLIDES = [];
   for (var i = 0; i < SLIDE_COUNT; i++) {
@@ -99,6 +99,19 @@
         // Forza il riempimento dello slot
         svg.removeAttribute("width");
         svg.removeAttribute("height");
+
+        // Risolvi gli href relativi delle <image> rispetto alla cartella SVG
+        // (l'SVG è caricato inline, quindi i path relativi punterebbero a index.html)
+        var basePath = s.svg.replace(/\/[^\/]+$/, "/");
+        var imgs = svg.querySelectorAll("image");
+        for (var k = 0; k < imgs.length; k++) {
+          var href = imgs[k].getAttribute("xlink:href") || imgs[k].getAttribute("href");
+          if (href && !/^https?:\/\//.test(href) && !/^\//.test(href) && !/^data:/.test(href)) {
+            var resolved = basePath + href;
+            imgs[k].setAttribute("xlink:href", resolved);
+            imgs[k].setAttribute("href", resolved);
+          }
+        }
       }
     }).catch(function() {
       // Fallback: PNG
