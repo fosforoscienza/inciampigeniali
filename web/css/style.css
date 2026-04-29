@@ -279,7 +279,7 @@ kbd {
 /* Numero bianco dentro la testa del pin */
 .pin__number {
   position: absolute;
-  top: 2px;
+  top: 6px;
   left: 50%;
   transform: translateX(-50%);
   color: #fff;
