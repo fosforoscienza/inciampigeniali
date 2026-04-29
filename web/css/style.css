@@ -95,6 +95,13 @@ kbd {
   display: block;
 }
 
+/* SVG inline (slide con Magic Move): riempie lo slot e mantiene il viewBox */
+.slide__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 /* Placeholder mostrato quando il PNG della slide non è ancora caricato */
 .slide__placeholder {
   width: 100%;
