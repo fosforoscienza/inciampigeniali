@@ -95,13 +95,21 @@
       el.innerHTML = svgText;
       var svg = el.querySelector("svg");
       if (svg) {
+        // Id univoco per scopare gli stili interni (Illustrator usa .st0,
+        // .st1, ... che collidono fra SVG diversi sulla stessa pagina)
+        var svgId = "slide-svg-" + s.id;
+        svg.id = svgId;
         svg.classList.add("slide__svg");
-        // Forza il riempimento dello slot
         svg.removeAttribute("width");
         svg.removeAttribute("height");
 
+        // Scope dei <style> interni: prefissa ogni selettore con #slide-svg-NN
+        var styles = svg.querySelectorAll("style");
+        for (var j = 0; j < styles.length; j++) {
+          styles[j].textContent = scopeCssRules(styles[j].textContent, "#" + svgId);
+        }
+
         // Risolvi gli href relativi delle <image> rispetto alla cartella SVG
-        // (l'SVG è caricato inline, quindi i path relativi punterebbero a index.html)
         var basePath = s.svg.replace(/\/[^\/]+$/, "/");
         var imgs = svg.querySelectorAll("image");
         for (var k = 0; k < imgs.length; k++) {
@@ -161,63 +169,82 @@
     slideCurrentEl.textContent = String(currentIndex + 1);
   }
 
-  // Anima gli elementi con lo stesso id da `fromSlide` a `toSlide`.
-  // L'elemento di destinazione viene nascosto durante l'animazione,
-  // l'elemento di partenza viene traslato/scalato fino alla posizione finale.
+  // Scope per i selettori CSS dentro <style> SVG: prepende `prefix `
+  // a ogni selettore. Risolve la collisione di .st0/.st1/... fra SVG
+  // di Illustrator caricati nella stessa pagina.
+  function scopeCssRules(css, prefix) {
+    return css.replace(/([^{}]+)\{([^{}]*)\}/g, function(m, sel, body) {
+      var scoped = sel.split(",").map(function(s) {
+        s = s.trim();
+        if (!s || /^@/.test(s)) return s;
+        return prefix + " " + s;
+      }).join(", ");
+      return scoped + " { " + body + " }";
+    });
+  }
+
+  // Magic Move (tecnica FLIP):
+  //   l'elemento condiviso nella slide di destinazione parte dalla
+  //   posizione che aveva nella slide di partenza e anima fino alla
+  //   sua posizione naturale. L'omologo nella slide di partenza viene
+  //   nascosto, così non si vedono i doppioni durante il cross-dissolve.
+  //   Risultato: gli elementi condivisi appaiono stabili (no fade),
+  //   gli altri sfumano con il cross-dissolve della slide.
   function magicMove(fromSlide, toSlide, durationMs) {
     var fromSvg = fromSlide.querySelector("svg");
     var toSvg = toSlide.querySelector("svg");
     if (!fromSvg || !toSvg) return;
 
-    var fromEls = fromSvg.querySelectorAll("[id]");
-    for (var i = 0; i < fromEls.length; i++) {
-      (function(fromEl) {
-        var id = fromEl.id;
-        if (!id) return;
-        var toEl;
-        try { toEl = toSvg.querySelector("#" + (window.CSS && CSS.escape ? CSS.escape(id) : id)); }
-        catch (err) { return; }
-        if (!toEl) return;
+    var toEls = toSvg.querySelectorAll("[id]");
+    for (var i = 0; i < toEls.length; i++) {
+      (function(toEl) {
+        var id = toEl.id;
+        if (!id || /^slide-svg-/.test(id)) return;
+        var fromEl;
+        try {
+          var sel = "#" + (window.CSS && CSS.escape ? CSS.escape(id) : id);
+          fromEl = fromSvg.querySelector(sel);
+        } catch (err) { return; }
+        if (!fromEl) return;
 
         var fromRect = fromEl.getBoundingClientRect();
         var toRect = toEl.getBoundingClientRect();
-        if (!fromRect.width || !fromRect.height) return;
+        if (!toRect.width || !toRect.height) return;
 
-        var dx = toRect.left - fromRect.left;
-        var dy = toRect.top - fromRect.top;
-        var sx = toRect.width / fromRect.width;
-        var sy = toRect.height / fromRect.height;
+        var dx = fromRect.left - toRect.left;   // delta inverso (FLIP)
+        var dy = fromRect.top - toRect.top;
+        var sx = toRect.width  ? fromRect.width  / toRect.width  : 1;
+        var sy = toRect.height ? fromRect.height / toRect.height : 1;
 
-        // Salta se non si muove
-        if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5 &&
-            Math.abs(sx - 1) < 0.005 && Math.abs(sy - 1) < 0.005) return;
+        // Nascondi l'omologo nella slide di partenza (no doppione)
+        var prevFromOpacity = fromEl.style.opacity;
+        fromEl.style.opacity = "0";
 
-        // Nascondi il duplicato nella slide di destinazione
-        var prevToOpacity = toEl.style.opacity;
-        toEl.style.opacity = "0";
+        // FLIP: posiziona l'elemento di destinazione sulla posizione
+        // di partenza, poi anima alla posizione naturale.
+        toEl.style.transformBox = "fill-box";
+        toEl.style.transformOrigin = "0 0";
+        toEl.style.transition = "none";
+        toEl.style.transform =
+          "translate(" + dx + "px, " + dy + "px) scale(" + sx + ", " + sy + ")";
+        toEl.style.willChange = "transform";
 
-        // Anima la copia nella slide di partenza
-        fromEl.style.transformBox = "fill-box";
-        fromEl.style.transformOrigin = "0 0";
-        fromEl.style.transition = "transform " + durationMs + "ms ease";
-        fromEl.style.willChange = "transform";
-        // Doppio rAF per assicurarsi che il frame iniziale sia applicato
+        // Forza reflow, poi attiva la transizione verso identità
+        toEl.getBoundingClientRect();
         requestAnimationFrame(function() {
-          requestAnimationFrame(function() {
-            fromEl.style.transform =
-              "translate(" + dx + "px, " + dy + "px) scale(" + sx + ", " + sy + ")";
-          });
+          toEl.style.transition = "transform " + durationMs + "ms ease";
+          toEl.style.transform = "";
         });
 
         setTimeout(function() {
-          toEl.style.opacity = prevToOpacity || "";
-          fromEl.style.transform = "";
-          fromEl.style.transition = "";
-          fromEl.style.transformBox = "";
-          fromEl.style.transformOrigin = "";
-          fromEl.style.willChange = "";
-        }, durationMs + 30);
-      })(fromEls[i]);
+          toEl.style.transition = "";
+          toEl.style.transform = "";
+          toEl.style.transformBox = "";
+          toEl.style.transformOrigin = "";
+          toEl.style.willChange = "";
+          fromEl.style.opacity = prevFromOpacity || "";
+        }, durationMs + 50);
+      })(toEls[i]);
     }
   }
 
