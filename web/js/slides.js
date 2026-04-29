@@ -58,8 +58,11 @@
         var el = document.createElement("section");
         el.className = "slide";
         el.dataset.index = String(idx);
-        // Prova SVG; se non esiste, fallback automatico a PNG
-        loadSvgInto(el, s);
+        // Mostra immediatamente il PNG (no flash di nero durante la dissolvenza).
+        // Se per quella slide esiste anche un SVG, in background sostituiamo
+        // il contenuto e attiviamo il Magic Move.
+        appendPng(el, s);
+        trySwapToSvg(el, s);
         deckEl.appendChild(el);
       })(SLIDES[i], i);
     }
@@ -85,44 +88,46 @@
     el.appendChild(img);
   }
 
-  function loadSvgInto(el, s) {
+  // Prova a caricare l'SVG corrispondente. Se la fetch va a buon fine
+  // sostituisce il PNG con il contenuto SVG (e abilita il Magic Move).
+  // Se l'SVG non esiste (404, parse error, …) il PNG resta com'è.
+  function trySwapToSvg(el, s) {
     fetch(s.svg).then(function(res) {
       if (!res.ok) throw new Error("svg-missing");
       return res.text();
     }).then(function(svgText) {
+      // Rimuovi il contenuto PNG e inietta l'SVG
       el.innerHTML = svgText;
       var svg = el.querySelector("svg");
-      if (svg) {
-        el.dataset.kind = "svg";
-        // Id univoco per scopare gli stili interni (Illustrator usa .st0,
-        // .st1, ... che collidono fra SVG diversi sulla stessa pagina)
-        var svgId = "slide-svg-" + s.id;
-        svg.id = svgId;
-        svg.classList.add("slide__svg");
-        svg.removeAttribute("width");
-        svg.removeAttribute("height");
+      if (!svg) return;
 
-        // Scope dei <style> interni: prefissa ogni selettore con #slide-svg-NN
-        var styles = svg.querySelectorAll("style");
-        for (var j = 0; j < styles.length; j++) {
-          styles[j].textContent = scopeCssRules(styles[j].textContent, "#" + svgId);
-        }
+      el.dataset.kind = "svg";
+      var svgId = "slide-svg-" + s.id;
+      svg.id = svgId;
+      svg.classList.add("slide__svg");
+      svg.removeAttribute("width");
+      svg.removeAttribute("height");
 
-        // Risolvi gli href relativi delle <image> rispetto alla cartella SVG
-        var basePath = s.svg.replace(/\/[^\/]+$/, "/");
-        var imgs = svg.querySelectorAll("image");
-        for (var k = 0; k < imgs.length; k++) {
-          var href = imgs[k].getAttribute("xlink:href") || imgs[k].getAttribute("href");
-          if (href && !/^https?:\/\//.test(href) && !/^\//.test(href) && !/^data:/.test(href)) {
-            var resolved = basePath + href;
-            imgs[k].setAttribute("xlink:href", resolved);
-            imgs[k].setAttribute("href", resolved);
-          }
+      // Scope dei <style> interni: prefissa ogni selettore con #slide-svg-NN
+      // (evita collisioni di .st0/.st1/... fra SVG diversi)
+      var styles = svg.querySelectorAll("style");
+      for (var j = 0; j < styles.length; j++) {
+        styles[j].textContent = scopeCssRules(styles[j].textContent, "#" + svgId);
+      }
+
+      // Risolvi gli href relativi delle <image> rispetto alla cartella SVG
+      var basePath = s.svg.replace(/\/[^\/]+$/, "/");
+      var imgs = svg.querySelectorAll("image");
+      for (var k = 0; k < imgs.length; k++) {
+        var href = imgs[k].getAttribute("xlink:href") || imgs[k].getAttribute("href");
+        if (href && !/^https?:\/\//.test(href) && !/^\//.test(href) && !/^data:/.test(href)) {
+          var resolved = basePath + href;
+          imgs[k].setAttribute("xlink:href", resolved);
+          imgs[k].setAttribute("href", resolved);
         }
       }
     }).catch(function() {
-      // SVG non disponibile (404, parse error, ecc.) → fallback PNG
-      appendPng(el, s);
+      // Niente SVG: il PNG già appeso resta come contenuto della slide
     });
   }
 
