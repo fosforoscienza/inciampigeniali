@@ -20,8 +20,11 @@
 
 (function() {
   var SLIDE_COUNT = 27;
-  var SVG_SLIDES = [22, 23, 24, 25];  // numeri (1-based) delle slide SVG
 
+  // Per ogni slide proviamo prima l'SVG (assets/slides-svg/NN.svg),
+  // se non c'è ricadiamo sul PNG (assets/slides/NN.png). Quindi per
+  // attivare il Magic Move su una nuova slide basta caricare il file
+  // SVG con il nome giusto: il codice si arrangia.
   var SLIDES = [];
   for (var i = 0; i < SLIDE_COUNT; i++) {
     var n = i + 1;
@@ -32,7 +35,6 @@
       title: "Slide " + n,
       img: "assets/slides/" + id + ".png",
       svg: "assets/slides-svg/" + id + ".svg",
-      isSvg: SVG_SLIDES.indexOf(n) !== -1,
     });
   }
 
@@ -56,13 +58,8 @@
         var el = document.createElement("section");
         el.className = "slide";
         el.dataset.index = String(idx);
-        if (s.isSvg) el.dataset.kind = "svg";
-
-        if (s.isSvg) {
-          loadSvgInto(el, s);
-        } else {
-          appendPng(el, s);
-        }
+        // Prova SVG; se non esiste, fallback automatico a PNG
+        loadSvgInto(el, s);
         deckEl.appendChild(el);
       })(SLIDES[i], i);
     }
@@ -96,6 +93,7 @@
       el.innerHTML = svgText;
       var svg = el.querySelector("svg");
       if (svg) {
+        el.dataset.kind = "svg";
         // Id univoco per scopare gli stili interni (Illustrator usa .st0,
         // .st1, ... che collidono fra SVG diversi sulla stessa pagina)
         var svgId = "slide-svg-" + s.id;
@@ -123,8 +121,7 @@
         }
       }
     }).catch(function() {
-      // Fallback: PNG
-      el.dataset.kind = "";
+      // SVG non disponibile (404, parse error, ecc.) → fallback PNG
       appendPng(el, s);
     });
   }
