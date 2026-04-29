@@ -19,7 +19,7 @@
 //   Home/End: prima / ultima slide
 
 (function() {
-  var SLIDE_COUNT = 27;
+  var SLIDE_COUNT = 28;
 
   // Per ogni slide proviamo prima l'SVG (assets/slides-svg/NN.svg),
   // se non c'è ricadiamo sul PNG (assets/slides/NN.png). Quindi per
