@@ -279,13 +279,13 @@ kbd {
 /* Numero bianco dentro la testa del pin */
 .pin__number {
   position: absolute;
-  top: 6px;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
   color: #fff;
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 400;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
   line-height: 1;
   letter-spacing: 0.02em;
   pointer-events: none;
