@@ -383,6 +383,92 @@ body.calibrating .pin__tooltip { display: none; }
 }
 
 /* ============================================================
+   GLOBO 3D — D3 orthographic projection, drag-to-rotate
+   Stile coerente col planisfero a mano libera.
+   ============================================================ */
+.screen--globe {
+  background: var(--paper) url("../assets/decor/texture-carta.png") center/cover;
+}
+.globe-container {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 1rem;
+}
+.globe-svg {
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  max-width: 100%;
+  max-height: 100%;
+}
+.globe-svg:active { cursor: grabbing; }
+
+/* Sfera (oceano) */
+.globe__sphere {
+  fill: rgba(244, 236, 214, 0.35);
+  stroke: var(--ink);
+  stroke-width: 1.6;
+  filter: url(#globe-sketch);
+}
+/* Reticolo lat/lon */
+.globe__graticule {
+  fill: none;
+  stroke: rgba(43, 38, 34, 0.18);
+  stroke-width: 0.5;
+}
+/* Continenti / paesi */
+.globe__country {
+  fill: rgba(255, 247, 224, 0.85);
+  stroke: var(--ink);
+  stroke-width: 0.7;
+  filter: url(#globe-sketch);
+  vector-effect: non-scaling-stroke;
+}
+
+/* Pin sul globo: cerchio rosso col numero, simile a quello sulla mappa */
+.globe__pin {
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.globe__pin:hover { transform: scale(1.15); }
+.globe__pin-bg {
+  fill: var(--accent);
+  stroke: #fff;
+  stroke-width: 2;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+}
+.globe__pin-num {
+  fill: #fff;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  pointer-events: none;
+  text-anchor: middle;
+}
+/* Tooltip al passaggio del mouse */
+.globe__pin-tip {
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.globe__pin:hover .globe__pin-tip { opacity: 1; }
+.globe__pin-tip-bg {
+  fill: var(--ink);
+  rx: 4;
+}
+.globe__pin-tip-text {
+  fill: var(--paper);
+  font-family: var(--font-serif);
+  font-size: 13px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+/* ============================================================
    MODAL — disegno + titolo + sottotitolo
    ============================================================ */
 .modal[hidden] { display: none; }

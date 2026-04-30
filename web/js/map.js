@@ -222,4 +222,6 @@
   }, true); // capture-phase: chiude il modal prima che app.js torni alle slide
 
   window.Pins = { ensure: loadData };
+  // API modal condivisa (usata anche da globe.js)
+  window.Modal = { open: openModal, close: closeModal };
 })();

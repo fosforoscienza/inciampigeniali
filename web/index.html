@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;700&display=swap" />
-  <link rel="stylesheet" href="css/style.css?v=22" />
+  <link rel="stylesheet" href="css/style.css?v=23" />
 </head>
 <body>
 
@@ -43,6 +43,17 @@
     </div>
   </section>
 
+  <!-- ============================================================ -->
+  <!-- GLOBO 3D — interattivo, ruotabile col drag                   -->
+  <!-- ============================================================ -->
+  <section id="screen-globe" class="screen screen--globe" data-screen="globe" hidden>
+    <div id="globe-container" class="globe-container">
+      <svg id="globe-svg" class="globe-svg" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+    <img class="map-logo" src="assets/decor/logo-fosforo.png" alt="Fosforo Scienza" />
+    <button id="globe-btn-fine" class="map-btn-fine" type="button">Fine</button>
+  </section>
+
   <!-- Overlay nero globale, attivato col tasto B -->
   <div id="black-overlay" class="black-overlay" hidden></div>
 
@@ -65,8 +76,13 @@
     </div>
   </div>
 
-  <script src="js/slides.js?v=22"></script>
-  <script src="js/map.js?v=22"></script>
-  <script src="js/app.js?v=22"></script>
+  <!-- D3 + topojson per il globo (CDN; servono internet, oppure scaricali in web/js/lib/) -->
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+
+  <script src="js/slides.js?v=23"></script>
+  <script src="js/map.js?v=23"></script>
+  <script src="js/globe.js?v=23"></script>
+  <script src="js/app.js?v=23"></script>
 </body>
 </html>

@@ -279,7 +279,8 @@
 
   function prev() {
     if (currentIndex === LAST_SLIDE) {
-      window.App && window.App.show("map");
+      // Dalla slide finale si torna al globo (non alla mappa)
+      window.App && window.App.show("globe");
       return;
     }
     if (currentIndex > 0) {

@@ -1,27 +1,27 @@
 // Router minimale + tasti globali.
-// Schermate: "presentation" e "map". L'app parte sulle slide,
-// la mappa è la sezione centrale, raggiunta dopo la slide 26.
+// Schermate: "presentation", "map", "globe".
+// Flusso: slide 1..(N-1) → map → globe → slide finale (N)
 //
 // Tasti globali:
 //   F  → fullscreen (pywebview se disponibile, altrimenti API browser)
 //   B  → overlay nero (utile per "spegnere" lo schermo durante una pausa)
 //   M  → salta direttamente alla mappa
+//   G  → salta direttamente al globo
 
-(() => {
-  const SCREENS = ["presentation", "map"];
-  let current = "presentation";
+(function() {
+  var SCREENS = ["presentation", "map", "globe"];
+  var current = "presentation";
 
   function show(route) {
-    if (!SCREENS.includes(route)) return;
-    SCREENS.forEach((r) => {
-      const el = document.querySelector('[data-screen="' + r + '"]');
-      if (!el) return;
-      el.hidden = r !== route;
-    });
-    current = route;
-    if (route === "map") {
-      window.Pins && window.Pins.ensure();
+    if (SCREENS.indexOf(route) === -1) return;
+    for (var i = 0; i < SCREENS.length; i++) {
+      var el = document.querySelector('[data-screen="' + SCREENS[i] + '"]');
+      if (!el) continue;
+      el.hidden = SCREENS[i] !== route;
     }
+    current = route;
+    if (route === "map")   { window.Pins  && window.Pins.ensure(); }
+    if (route === "globe") { window.Globe && window.Globe.ensure(); }
   }
 
   function toggleFullscreen() {
@@ -42,7 +42,6 @@
     el.hidden = !el.hidden;
   }
 
-  // Toggle barra comandi (tasto C nella presentazione, pulsante "Comandi")
   function toggleChrome() {
     var chrome = document.getElementById("deck-chrome");
     if (!chrome) return;
@@ -50,26 +49,22 @@
   }
 
   var toggleBtn = document.getElementById("deck-chrome-toggle");
-  if (toggleBtn) {
-    toggleBtn.addEventListener("click", toggleChrome);
-  }
+  if (toggleBtn) toggleBtn.addEventListener("click", toggleChrome);
 
-  // Bottoni con data-route="..."
   document.addEventListener("click", function(e) {
     var route = e.target.closest("[data-route]");
     if (route) show(route.dataset.route);
   });
 
-  // Pulsante "Fine" sulla mappa → slide 27
-  var finBtn = document.getElementById("map-btn-fine");
-  if (finBtn) {
-    finBtn.addEventListener("click", function() {
+  // "Fine" sulla mappa → salta direttamente alla slide finale
+  var mapFineBtn = document.getElementById("map-btn-fine");
+  if (mapFineBtn) {
+    mapFineBtn.addEventListener("click", function() {
       window.Slides && window.Slides.goToEnd();
       show("presentation");
     });
   }
 
-  // Tasti globali
   document.addEventListener("keydown", function(e) {
     var tag = (e.target && e.target.tagName) || "";
     if (tag === "INPUT" || tag === "TEXTAREA") return;
@@ -89,20 +84,39 @@
       if (current !== "map") show("map");
       return;
     }
+    if (e.key === "G" || e.key === "g") {
+      e.preventDefault();
+      if (current !== "globe") show("globe");
+      return;
+    }
 
-    // Sulla mappa: back → slide 26, forward → slide 27
+    var back = ["ArrowLeft", "ArrowUp", "PageUp", "Backspace", "Escape"];
+    var fwd  = ["ArrowRight", "ArrowDown", "PageDown", " "];
+
+    // Sulla mappa: back → slide penultima, forward → globo
     if (current === "map") {
-      var back = ["ArrowLeft", "ArrowUp", "PageUp", "Backspace", "Escape"];
-      var fwd  = ["ArrowRight", "ArrowDown", "PageDown", " "];
       if (back.indexOf(e.key) !== -1) {
         e.preventDefault();
         window.Slides && window.Slides.backFromMap();
         show("presentation");
       } else if (fwd.indexOf(e.key) !== -1) {
         e.preventDefault();
+        show("globe");
+      }
+      return;
+    }
+
+    // Sul globo: back → mappa, forward → slide finale
+    if (current === "globe") {
+      if (back.indexOf(e.key) !== -1) {
+        e.preventDefault();
+        show("map");
+      } else if (fwd.indexOf(e.key) !== -1) {
+        e.preventDefault();
         window.Slides && window.Slides.goToEnd();
         show("presentation");
       }
+      return;
     }
   });
 
